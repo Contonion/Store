@@ -1579,10 +1579,10 @@
         right: 4px;
       }
 
-      /* Desktop fills screen with smaller offset */
+      /* Desktop fills screen - no taskbar on mobile */
       #desktop {
         top: 24px !important;
-        bottom: 52px !important;
+        bottom: 0 !important;
       }
 
       /* Desktop icons in a 3-column grid on mobile (not draggable) */
@@ -1614,79 +1614,10 @@
         max-width: none;
       }
 
-      /* Taskbar - slightly taller for easier touch */
-      #taskbar {
-        height: 48px;
-        bottom: 4px;
-      }
-      #taskbar::after {
-        height: 4px;
-        bottom: -4px;
-      }
-
-      /* Start button - comfortable touch target */
-      #start-button {
-        padding: 0 12px 0 8px;
-        margin-left: 4px;
-        border-radius: 8px;
-      }
-      #start-button .start-icon {
-        font-size: 20px;
-      }
-      #start-button .start-text {
-        font-size: 12px;
-        letter-spacing: 0.3px;
-      }
-
-      /* Hide quick launch on mobile - save space */
-      #quick-launch {
-        display: none;
-      }
-
-      /* Hide taskbar grip handles on mobile */
-      .taskbar-grip {
-        display: none;
-      }
-
-      /* Task buttons - spaced out for touch */
-      #task-buttons {
-        gap: 8px;
-        padding: 0 6px;
-      }
-      .task-button {
-        height: 36px;
-        min-width: 44px;
-        max-width: 120px;
-        padding: 0 10px;
-        font-size: 10px;
-      }
-      .task-button .text {
-        display: none;
-      }
-      .task-button .icon {
-        font-size: 18px;
-      }
-
-      /* System tray - comfortable touch targets */
-      #system-tray {
-        gap: 6px;
-        padding: 0 4px 0 6px;
-      }
-      .tray-icon {
-        font-size: 16px;
-        width: 24px;
-        height: 24px;
-      }
-      .tray-separator {
-        margin: 0 3px;
-      }
-      #clock-area {
-        padding: 0 8px;
-        height: 32px;
-        min-width: 60px;
-      }
-      #clock {
-        font-size: 11px;
+      /* Hide taskbar and start menu on mobile */
+      #taskbar,
+      #start-menu {
+        display: none !important;
       }
 
       /* Windows - near fullscreen by default, but draggable */
@@ -1773,71 +1704,6 @@
         font-size: 36px;
       }
 
-      /* Start menu full-width */
-      /* Start menu - fits exactly between taskbar and top of screen */
-      #start-menu {
-        width: 100vw;
-        left: 0;
-        bottom: 52px;
-        top: 0;
-        max-height: calc(100vh - 52px);
-        border-radius: 0;
-        border: none;
-        border-top: 2px solid #3a0000;
-        display: none;
-        flex-direction: column;
-      }
-      #start-menu.open {
-        display: flex;
-      }
-
-      .start-menu-header {
-        padding: 8px 10px;
-        flex-shrink: 0;
-      }
-      .start-menu-header .avatar {
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
-      }
-      .start-menu-header .user-name {
-        font-size: 13px;
-      }
-
-      .start-menu-body {
-        min-height: 0;
-        flex: 1;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        flex-direction: column;
-      }
-
-      .start-menu-left {
-        border-right: none;
-        border-bottom: 1px solid #222;
-      }
-
-      .start-menu-right {
-        width: 100%;
-      }
-
-      .start-menu-footer {
-        flex-shrink: 0;
-      }
-
-      .menu-item {
-        padding: 8px 12px;
-        font-size: 13px;
-      }
-
-      .menu-item .item-icon {
-        font-size: 22px;
-        width: 30px;
-      }
-
-      .menu-item-small {
-        padding: 7px 12px;
-      }
 
       /* Welcome window adjustments */
       .welcome-content {
@@ -3164,7 +3030,7 @@
         const winCount = Object.keys(windows).length;
         const nudge = winCount * 8;
         win.style.width = 'calc(100vw - ' + (nudge * 2) + 'px)';
-        win.style.height = 'calc(100vh - ' + (110 + nudge) + 'px)';
+        win.style.height = 'calc(100vh - ' + (30 + nudge) + 'px)';
         win.style.left = nudge + 'px';
         win.style.top = nudge + 'px';
       } else {
