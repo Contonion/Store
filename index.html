@@ -1834,9 +1834,13 @@
     /* Also hide snake on touch devices in landscape (phones rotated) */
     @media (pointer: coarse) and (max-height: 600px) {
       .snake-icon, .snake-menu-item { display: none !important; }
+      #taskbar, #start-menu { display: none !important; }
+      #desktop { bottom: 0 !important; }
     }
     @media (pointer: coarse) and (max-width: 1024px) {
       .snake-icon, .snake-menu-item { display: none !important; }
+      #taskbar, #start-menu { display: none !important; }
+      #desktop { bottom: 0 !important; }
     }
 
     /* ===== WALLPAPER THEMES ===== */
@@ -2990,7 +2994,10 @@
     }
 
     // ===== WINDOW STATE PERSISTENCE =====
+    var _restoringState = false;
+
     function saveWindowState() {
+      if (_restoringState) return;
       try {
         if (localStorage.getItem('nocturn_cookies') !== 'accepted') return;
         var state = [];
@@ -3938,7 +3945,11 @@
         var saved = localStorage.getItem('nocturn_window_state');
         if (!saved) return false;
         var state = JSON.parse(saved);
-        if (!Array.isArray(state) || state.length === 0) return false;
+        if (!Array.isArray(state)) return false;
+        // Empty array means user closed all windows - respect that
+        if (state.length === 0) return true;
+        // Prevent saveWindowState from firing during restore
+        _restoringState = true;
         // Sort by zIndex so focus order is preserved
         state.sort(function(a, b) { return (a.zIndex || 0) - (b.zIndex || 0); });
         state.forEach(function(s) {
@@ -3954,9 +3965,11 @@
           if (s.maximized) { el.classList.add('maximized'); w.maximized = true; }
           if (s.minimized) { el.classList.add('minimized'); el.setAttribute('aria-hidden', 'true'); }
         });
+        _restoringState = false;
         updateTaskButtons();
+        saveWindowState();
         return true;
-      } catch(e) { return false; }
+      } catch(e) { _restoringState = false; return false; }
     }
 
     if (skipBoot) {
@@ -3976,7 +3989,7 @@
             document.getElementById('boot-screen').classList.add('fade-out');
             setTimeout(() => {
               document.getElementById('boot-screen').style.display = 'none';
-              openWindow('welcome');
+              if (!restoreWindowState()) openWindow('welcome');
               // Mark boot as seen
               try {
                 if (localStorage.getItem('nocturn_cookies') === 'accepted') {
