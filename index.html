@@ -1,0 +1,3336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Official Nocturn Films merchandise store. Horror-inspired apparel including hats, t-shirts, sweatshirts, jackets, and crewnecks.">
+  <title>Nocturn Films - Official Merch Store</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tahoma&family=Pixelify+Sans:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --xp-border-light: #4a0000;
+      --xp-border-dark: #1a0000;
+      --xp-title-gradient-1: #2a0000;
+      --xp-title-gradient-2: #5a0a0a;
+      --xp-title-gradient-3: #8b0000;
+      --xp-title-inactive-1: #1a1a1a;
+      --xp-title-inactive-2: #333;
+      --xp-button-face: #1a1a1a;
+      --xp-button-highlight: #333;
+      --xp-button-shadow: #0a0a0a;
+      --xp-window-bg: #0d0d0d;
+      --xp-desktop-bg: #0a0a0a;
+      --xp-taskbar-bg: linear-gradient(to bottom, #1a0000, #0d0000, #1a0000);
+      --xp-start-green-1: #8b0000;
+      --xp-start-green-2: #dc2626;
+      --xp-red: #dc2626;
+      --xp-text: #e0e0e0;
+      --xp-text-dim: #888;
+    }
+
+    body {
+      font-family: 'Tahoma', 'Segoe UI', sans-serif;
+      font-size: 11px;
+      color: var(--xp-text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+      cursor: default;
+    }
+
+    /* ===== BOOT SCREEN ===== */
+    #boot-screen {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease;
+    }
+
+    #boot-screen.fade-out {
+      opacity: 0;
+    }
+
+    .boot-logo {
+      font-family: 'Pixelify Sans', monospace;
+      font-size: 48px;
+      color: var(--xp-red);
+      text-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+      margin-bottom: 40px;
+      letter-spacing: 4px;
+    }
+
+    .boot-subtitle {
+      color: #999;
+      font-size: 14px;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+    }
+
+    .boot-progress-track {
+      width: 220px;
+      height: 18px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .boot-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to bottom, #dc2626, #8b0000);
+      transition: width 0.3s ease;
+      position: relative;
+    }
+
+    .boot-progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+    }
+
+    .boot-text {
+      color: #999;
+      font-size: 11px;
+      margin-top: 15px;
+    }
+
+    /* ===== DESKTOP ===== */
+    #desktop {
+      position: fixed;
+      inset: 0;
+      bottom: 50px;
+      background: var(--xp-desktop-bg);
+      overflow: hidden;
+    }
+
+    /* Horror Bliss wallpaper - pure CSS, no license needed */
+    #desktop-wallpaper {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: linear-gradient(
+        to bottom,
+        #0a0000 0%,
+        #1a0505 15%,
+        #2d0a0a 30%,
+        #3a0808 42%,
+        #1a0000 55%,
+        #0d0d0d 100%
+      );
+    }
+
+    /* Blood-red moon */
+    #desktop-wallpaper .moon {
+      position: absolute;
+      top: 8%;
+      right: 18%;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%,
+        #ff4444 0%,
+        #dc2626 30%,
+        #8b0000 60%,
+        #4a0000 100%
+      );
+      box-shadow:
+        0 0 40px rgba(220, 38, 38, 0.4),
+        0 0 80px rgba(220, 38, 38, 0.2),
+        0 0 120px rgba(139, 0, 0, 0.15);
+    }
+
+    /* Moon craters */
+    #desktop-wallpaper .moon::before {
+      content: '';
+      position: absolute;
+      top: 25%;
+      left: 30%;
+      width: 20px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.15);
+      box-shadow:
+        25px 15px 0 8px rgba(0,0,0,0.1),
+        -10px 30px 0 4px rgba(0,0,0,0.12),
+        30px -5px 0 3px rgba(0,0,0,0.08);
+    }
+
+    /* Stars */
+    #desktop-wallpaper .stars {
+      position: absolute;
+      inset: 0;
+      bottom: 45%;
+    }
+
+    #desktop-wallpaper .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle var(--dur, 3s) var(--delay, 0s) infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: var(--max-opacity, 0.7); }
+    }
+
+    /* Rolling hills / landscape silhouette */
+    #desktop-wallpaper .hills {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 55%;
+    }
+
+    /* Far hill */
+    #desktop-wallpaper .hill-far {
+      position: absolute;
+      bottom: 10%;
+      left: -10%;
+      right: -10%;
+      height: 50%;
+      background: #0d0505;
+      border-radius: 60% 70% 0 0;
+    }
+
+    /* Mid hill */
+    #desktop-wallpaper .hill-mid {
+      position: absolute;
+      bottom: 0;
+      left: -5%;
+      right: -15%;
+      height: 45%;
+      background: #0a0303;
+      border-radius: 50% 80% 0 0;
+    }
+
+    /* Near hill */
+    #desktop-wallpaper .hill-near {
+      position: absolute;
+      bottom: 0;
+      left: -15%;
+      right: -5%;
+      height: 35%;
+      background: #080202;
+      border-radius: 70% 40% 0 0;
+    }
+
+    /* Ground */
+    #desktop-wallpaper .ground {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 15%;
+      background: linear-gradient(to bottom, #060101, #0a0a0a);
+    }
+
+    /* Dead trees silhouette */
+    #desktop-wallpaper .tree {
+      position: absolute;
+      bottom: 18%;
+      width: 3px;
+      background: #050101;
+      z-index: 1;
+    }
+
+    #desktop-wallpaper .tree::before,
+    #desktop-wallpaper .tree::after {
+      content: '';
+      position: absolute;
+      background: #050101;
+      border-radius: 0 80% 0 0;
+    }
+
+    #desktop-wallpaper .tree-1 {
+      left: 8%;
+      height: 120px;
+    }
+    #desktop-wallpaper .tree-1::before {
+      bottom: 70%;
+      left: 0;
+      width: 35px;
+      height: 2px;
+      transform: rotate(-30deg);
+      transform-origin: left center;
+    }
+    #desktop-wallpaper .tree-1::after {
+      bottom: 50%;
+      right: 0;
+      width: 28px;
+      height: 2px;
+      transform: rotate(25deg);
+      transform-origin: right center;
+    }
+
+    #desktop-wallpaper .tree-2 {
+      left: 12%;
+      height: 80px;
+    }
+    #desktop-wallpaper .tree-2::before {
+      bottom: 60%;
+      left: 0;
+      width: 22px;
+      height: 2px;
+      transform: rotate(-40deg);
+      transform-origin: left center;
+    }
+    #desktop-wallpaper .tree-2::after {
+      bottom: 80%;
+      right: 0;
+      width: 18px;
+      height: 2px;
+      transform: rotate(20deg);
+      transform-origin: right center;
+    }
+
+    #desktop-wallpaper .tree-3 {
+      right: 6%;
+      height: 140px;
+    }
+    #desktop-wallpaper .tree-3::before {
+      bottom: 65%;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      transform: rotate(-25deg);
+      transform-origin: left center;
+    }
+    #desktop-wallpaper .tree-3::after {
+      bottom: 45%;
+      right: 0;
+      width: 32px;
+      height: 2px;
+      transform: rotate(35deg);
+      transform-origin: right center;
+    }
+
+    #desktop-wallpaper .tree-4 {
+      right: 10%;
+      height: 95px;
+    }
+    #desktop-wallpaper .tree-4::before {
+      bottom: 55%;
+      left: 0;
+      width: 25px;
+      height: 2px;
+      transform: rotate(-35deg);
+      transform-origin: left center;
+    }
+    #desktop-wallpaper .tree-4::after {
+      bottom: 75%;
+      right: 0;
+      width: 20px;
+      height: 2px;
+      transform: rotate(30deg);
+      transform-origin: right center;
+    }
+
+    /* Fog / mist layer */
+    #desktop-wallpaper .fog {
+      position: absolute;
+      bottom: 15%;
+      left: 0;
+      right: 0;
+      height: 25%;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(30, 5, 5, 0.3) 40%,
+        rgba(20, 3, 3, 0.5) 60%,
+        transparent 100%
+      );
+      animation: fogDrift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes fogDrift {
+      0% { transform: translateX(-3%); opacity: 0.6; }
+      100% { transform: translateX(3%); opacity: 0.9; }
+    }
+
+    /* Vignette */
+    #desktop-wallpaper .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+    }
+
+    /* Scanline effect over everything */
+    #desktop::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* Ambient red glow that pulses subtly */
+    #desktop::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 15%, rgba(139, 0, 0, 0.06) 0%, transparent 50%);
+      animation: ambientPulse 8s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes ambientPulse {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* ===== DESKTOP ICONS ===== */
+    .desktop-icons {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 16px;
+      position: relative;
+      z-index: 1;
+      max-height: calc(100vh - 68px);
+      align-content: flex-start;
+    }
+
+    .desktop-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 75px;
+      padding: 6px;
+      border-radius: 3px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.1s;
+    }
+
+    .desktop-icon:hover {
+      background: rgba(220, 38, 38, 0.1);
+    }
+
+    .desktop-icon.selected {
+      background: rgba(220, 38, 38, 0.2);
+      outline: 1px dotted rgba(220, 38, 38, 0.5);
+    }
+
+    .desktop-icon .icon {
+      font-size: 32px;
+      margin-bottom: 4px;
+      filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.8));
+    }
+
+    .desktop-icon .label {
+      font-size: 11px;
+      color: #ddd;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
+      line-height: 1.2;
+      word-wrap: break-word;
+    }
+
+    /* ===== XP WINDOW ===== */
+    .xp-window {
+      position: absolute;
+      min-width: 300px;
+      min-height: 200px;
+      background: var(--xp-window-bg);
+      border: 1px solid var(--xp-border-light);
+      border-radius: 8px 8px 0 0;
+      box-shadow:
+        0 0 0 1px rgba(139, 0, 0, 0.3),
+        2px 2px 10px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(139, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .xp-window.active {
+      z-index: 100;
+      box-shadow:
+        0 0 0 1px rgba(220, 38, 38, 0.4),
+        2px 2px 15px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(220, 38, 38, 0.15);
+    }
+
+    .xp-window.minimized {
+      display: none;
+    }
+
+    .xp-window.maximized {
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: calc(100vh - 50px) !important;
+      border-radius: 0;
+    }
+
+    /* Title bar */
+    .title-bar {
+      background: linear-gradient(to bottom,
+        var(--xp-title-gradient-3),
+        var(--xp-title-gradient-2) 40%,
+        var(--xp-title-gradient-1) 100%
+      );
+      padding: 3px 5px 3px 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: default;
+      min-height: 28px;
+      border-radius: 7px 7px 0 0;
+    }
+
+    .xp-window:not(.active) .title-bar {
+      background: linear-gradient(to bottom,
+        var(--xp-title-inactive-2),
+        var(--xp-title-inactive-1)
+      );
+    }
+
+    .title-bar .icon {
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .title-bar .title {
+      flex: 1;
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .xp-window:not(.active) .title-bar .title {
+      color: #999;
+    }
+
+    .title-bar-buttons {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .title-bar-buttons button {
+      width: 21px;
+      height: 21px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .btn-minimize {
+      background: linear-gradient(to bottom, #333, #1a1a1a);
+    }
+
+    .btn-maximize {
+      background: linear-gradient(to bottom, #333, #1a1a1a);
+    }
+
+    .btn-close {
+      background: linear-gradient(to bottom, #dc2626, #8b0000);
+    }
+
+    .btn-close:hover {
+      background: linear-gradient(to bottom, #ef4444, #dc2626);
+    }
+
+    .title-bar-buttons button:hover {
+      filter: brightness(1.3);
+    }
+
+    .title-bar-buttons button:active {
+      filter: brightness(0.8);
+    }
+
+    /* Window toolbar */
+    .window-toolbar {
+      background: #111;
+      border-bottom: 1px solid #222;
+      padding: 2px 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #888;
+    }
+
+    .window-toolbar span {
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+
+    .window-toolbar span:hover {
+      color: var(--xp-red);
+    }
+
+    /* Address bar */
+    .address-bar {
+      background: #111;
+      border-bottom: 1px solid #222;
+      padding: 3px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .address-bar label {
+      color: #999;
+    }
+
+    .address-bar input {
+      flex: 1;
+      background: #0a0a0a;
+      border: 1px solid #333;
+      padding: 2px 6px;
+      color: var(--xp-text);
+      font-size: 11px;
+      font-family: inherit;
+      border-radius: 1px;
+    }
+
+    /* Window content */
+    .window-content {
+      flex: 1;
+      overflow: auto;
+      padding: 12px;
+      background: var(--xp-window-bg);
+    }
+
+    .window-content::-webkit-scrollbar {
+      width: 16px;
+    }
+
+    .window-content::-webkit-scrollbar-track {
+      background: #111;
+    }
+
+    .window-content::-webkit-scrollbar-thumb {
+      background: linear-gradient(to right, #333, #222);
+      border: 1px solid #444;
+      border-radius: 2px;
+    }
+
+    .window-content::-webkit-scrollbar-button {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      height: 16px;
+    }
+
+    /* Status bar */
+    .status-bar {
+      background: #111;
+      border-top: 1px solid #222;
+      padding: 2px 8px;
+      font-size: 11px;
+      color: #999;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Resize handle */
+    .resize-handle {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 16px;
+      height: 16px;
+      cursor: nwse-resize;
+      background: linear-gradient(135deg, transparent 50%, #333 50%, transparent 55%, #333 60%, transparent 65%, #333 70%);
+      opacity: 0.5;
+    }
+
+    /* ===== TASKBAR ===== */
+    #taskbar {
+      position: fixed;
+      bottom: 6px;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: linear-gradient(to bottom,
+        #2a0000 0%,
+        #1a0000 4%,
+        #120000 8%,
+        #0d0000 40%,
+        #100000 90%,
+        #1a0000 95%,
+        #250000 100%
+      );
+      border-top: 2px solid #4a0a0a;
+      display: flex;
+      align-items: center;
+      z-index: 9999;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.6);
+    }
+
+    /* Black padding strip beneath taskbar */
+    #taskbar::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: #000;
+    }
+
+    /* Start button */
+    #start-button {
+      height: 100%;
+      padding: 0 16px 0 6px;
+      margin: 0 0 0 8px;
+      background: linear-gradient(to bottom,
+        #ef4444 0%,
+        #dc2626 8%,
+        #b91c1c 15%,
+        #991b1b 50%,
+        #7f1d1d 85%,
+        #6b1a1a 92%,
+        #8b0000 100%
+      );
+      border: none;
+      border-right: 1px solid #3a0000;
+      border-radius: 0 10px 10px 0;
+      color: white;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+      letter-spacing: 0.5px;
+      font-family: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #start-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.05) 60%, transparent);
+      pointer-events: none;
+    }
+
+    #start-button::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      pointer-events: none;
+    }
+
+    #start-button:hover {
+      background: linear-gradient(to bottom,
+        #f87171 0%,
+        #ef4444 8%,
+        #dc2626 15%,
+        #b91c1c 50%,
+        #991b1b 85%,
+        #7f1d1d 92%,
+        #991b1b 100%
+      );
+    }
+
+    #start-button:active, #start-button.active {
+      background: linear-gradient(to bottom,
+        #991b1b 0%,
+        #7f1d1d 15%,
+        #6b1a1a 50%,
+        #7f1d1d 85%,
+        #8b0000 100%
+      );
+    }
+
+    #start-button .start-icon {
+      font-size: 22px;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    }
+
+    #start-button .start-text {
+      font-size: 14px;
+      font-weight: bold;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+
+    /* Quick Launch bar */
+    #quick-launch {
+      display: flex;
+      align-items: center;
+      gap: 1px;
+      padding: 0 4px 0 8px;
+      height: 100%;
+      position: relative;
+    }
+
+    /* XP-style dotted grip handle on left side of quick launch */
+    #quick-launch::before {
+      content: '';
+      width: 6px;
+      height: 28px;
+      flex-shrink: 0;
+      margin-right: 6px;
+      background-image:
+        radial-gradient(circle at 2px 2px, #4a0a0a 1px, transparent 1px),
+        radial-gradient(circle at 5px 5px, #4a0a0a 1px, transparent 1px);
+      background-size: 6px 6px;
+      background-position: 0 0, 3px 3px;
+      opacity: 0.8;
+    }
+
+    .ql-button {
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all 0.1s;
+      padding: 0;
+      position: relative;
+    }
+
+    .ql-button:hover {
+      background: linear-gradient(to bottom,
+        rgba(220, 38, 38, 0.15),
+        rgba(139, 0, 0, 0.2)
+      );
+      border-color: rgba(220, 38, 38, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .ql-button:active {
+      background: rgba(220, 38, 38, 0.25);
+      border-color: rgba(220, 38, 38, 0.4);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .ql-button .ql-tooltip {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a1a1a;
+      border: 1px solid #3a0000;
+      color: #ddd;
+      font-size: 11px;
+      padding: 3px 8px;
+      white-space: nowrap;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+      pointer-events: none;
+    }
+
+    .ql-button .ql-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 4px solid transparent;
+      border-top-color: #3a0000;
+    }
+
+    .ql-button:hover .ql-tooltip {
+      display: block;
+      animation: tooltipIn 0.15s ease-out;
+    }
+
+    @keyframes tooltipIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* XP-style dotted grip handle dividers */
+    .taskbar-grip {
+      width: 6px;
+      height: 28px;
+      background-image:
+        radial-gradient(circle at 2px 2px, #4a0a0a 1px, transparent 1px),
+        radial-gradient(circle at 5px 5px, #4a0a0a 1px, transparent 1px);
+      background-size: 6px 6px;
+      background-position: 0 0, 3px 3px;
+      cursor: default;
+      flex-shrink: 0;
+      margin: 0 4px;
+      opacity: 0.8;
+    }
+
+    /* Task buttons area */
+    #task-buttons {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 0 4px;
+      overflow-x: auto;
+      height: 100%;
+    }
+
+    #task-buttons::-webkit-scrollbar {
+      height: 0;
+    }
+
+    .task-button {
+      height: 32px;
+      min-width: 150px;
+      max-width: 200px;
+      padding: 0 10px;
+      background: linear-gradient(to bottom,
+        #1e1e1e 0%,
+        #151515 8%,
+        #111 50%,
+        #0d0d0d 92%,
+        #151515 100%
+      );
+      border: 1px solid #333;
+      border-top-color: #444;
+      border-bottom-color: #1a1a1a;
+      border-radius: 3px;
+      color: #bbb;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: inherit;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.04),
+        0 1px 0 rgba(0,0,0,0.3);
+      transition: all 0.1s;
+    }
+
+    .task-button.active {
+      background: linear-gradient(to bottom,
+        #2a0505 0%,
+        #1f0303 8%,
+        #1a0000 50%,
+        #150000 92%,
+        #1f0303 100%
+      );
+      border-color: #5a0000;
+      border-top-color: #3a0000;
+      border-bottom-color: #4a0000;
+      color: #fff;
+      box-shadow:
+        inset 0 0 8px rgba(139, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255,255,255,0.03),
+        0 1px 0 rgba(0,0,0,0.3);
+    }
+
+    .task-button:hover:not(.active) {
+      background: linear-gradient(to bottom,
+        #252525 0%,
+        #1e1e1e 8%,
+        #181818 50%,
+        #141414 92%,
+        #1e1e1e 100%
+      );
+      border-color: #444;
+    }
+
+    .task-button .icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .task-button .text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 11px;
+    }
+
+    /* System tray */
+    #system-tray {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 4px 0 6px;
+      height: 100%;
+      border-left: 1px solid #2a0000;
+      font-size: 11px;
+      color: #ccc;
+      position: relative;
+    }
+
+    /* Chevron / expand button for tray */
+    .tray-expand {
+      width: 18px;
+      height: 26px;
+      background: linear-gradient(to bottom, #1a0000, #0d0000);
+      border: 1px solid #2a0000;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #999;
+      font-size: 8px;
+      margin-right: 2px;
+      transition: all 0.15s;
+    }
+
+    .tray-expand:hover {
+      border-color: #4a0000;
+      color: #aaa;
+      background: linear-gradient(to bottom, #2a0000, #1a0000);
+    }
+
+    .tray-icons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0 4px;
+    }
+
+    .tray-icon {
+      font-size: 15px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: all 0.15s;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tray-icon:hover {
+      opacity: 1;
+      color: var(--xp-red);
+    }
+
+    /* Separator before clock */
+    .tray-separator {
+      width: 1px;
+      height: 24px;
+      background: linear-gradient(to bottom, transparent, #3a0000, #3a0000, transparent);
+      margin: 0 3px;
+    }
+
+    /* Clock area - sunken XP style */
+    #clock-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      height: 32px;
+      background: linear-gradient(to bottom,
+        #080000 0%,
+        #0a0000 50%,
+        #0d0000 100%
+      );
+      border: 1px solid #1a0000;
+      border-top-color: #0a0000;
+      border-left-color: #0a0000;
+      border-right-color: #2a0000;
+      border-bottom-color: #2a0000;
+      border-radius: 2px;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+      min-width: 70px;
+    }
+
+    #clock {
+      font-size: 11px;
+      color: #ddd;
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    /* ===== START MENU ===== */
+    #start-menu {
+      position: fixed;
+      bottom: 50px;
+      left: 0;
+      width: 380px;
+      background: #0d0d0d;
+      border: 2px solid #3a0000;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      z-index: 10000;
+      display: none;
+      box-shadow: 3px -3px 15px rgba(0,0,0,0.8), 0 0 30px rgba(139,0,0,0.15);
+      overflow: hidden;
+    }
+
+    #start-menu.open {
+      display: block;
+      animation: slideUp 0.15s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .start-menu-header {
+      background: linear-gradient(to right, #3a0000, #5a0a0a, #8b0000);
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .start-menu-header .avatar {
+      width: 48px;
+      height: 48px;
+      background: #1a1a1a;
+      border: 2px solid #5a0000;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .start-menu-header .user-name {
+      font-size: 14px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .start-menu-body {
+      display: flex;
+      min-height: 300px;
+    }
+
+    .start-menu-left {
+      flex: 1;
+      background: #0d0d0d;
+      padding: 6px 0;
+      border-right: 1px solid #222;
+    }
+
+    .start-menu-right {
+      width: 160px;
+      background: #111;
+      padding: 6px 0;
+    }
+
+    .start-menu-separator {
+      height: 1px;
+      background: #222;
+      margin: 4px 8px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: background 0.1s;
+      color: var(--xp-text);
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .menu-item:hover {
+      background: rgba(220, 38, 38, 0.15);
+      color: #fff;
+    }
+
+    .menu-item .item-icon {
+      font-size: 20px;
+      width: 28px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .menu-item .item-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu-item .item-text .primary {
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .menu-item .item-text .secondary {
+      font-size: 10px;
+      color: #999;
+    }
+
+    .menu-item-small {
+      padding: 5px 12px;
+      font-size: 11px;
+    }
+
+    .menu-item-small .item-icon {
+      font-size: 16px;
+      width: 22px;
+    }
+
+    .start-menu-footer {
+      background: linear-gradient(to right, #1a0000, #2a0000);
+      padding: 6px 0;
+      display: flex;
+      border-top: 1px solid #3a0000;
+    }
+
+    .start-menu-footer .menu-item {
+      flex: 1;
+      justify-content: center;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    /* ===== PRODUCT GRID ===== */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      padding: 4px;
+    }
+
+    .product-card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .product-card:hover {
+      border-color: var(--xp-red);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+    }
+
+    .product-image {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-image .product-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+    }
+
+    .product-image .product-icon {
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--xp-red);
+      color: #fff;
+      font-size: 9px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 2px;
+      z-index: 2;
+      text-transform: uppercase;
+    }
+
+    .product-info {
+      padding: 10px;
+    }
+
+    .product-name {
+      font-size: 12px;
+      font-weight: bold;
+      color: #ddd;
+      margin-bottom: 4px;
+    }
+
+    .product-price {
+      font-size: 13px;
+      color: var(--xp-red);
+      font-weight: bold;
+    }
+
+    .product-desc {
+      font-size: 10px;
+      color: #999;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* ===== WELCOME WINDOW ===== */
+    .welcome-content {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .welcome-content h1 {
+      font-family: 'Pixelify Sans', monospace;
+      font-size: 32px;
+      color: var(--xp-red);
+      margin-bottom: 8px;
+      text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+    }
+
+    .welcome-content .tagline {
+      color: #999;
+      font-size: 13px;
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+
+    .welcome-content p {
+      color: #999;
+      font-size: 12px;
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto 16px;
+    }
+
+    .welcome-links {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .welcome-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);
+      border: 1px solid #333;
+      border-radius: 3px;
+      color: #ccc;
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .welcome-link:hover {
+      border-color: var(--xp-red);
+      color: #fff;
+      background: linear-gradient(to bottom, #2a0000, #1a0000);
+    }
+
+    .welcome-link .link-icon {
+      font-size: 16px;
+    }
+
+    /* Category header in windows */
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #222;
+    }
+
+    .category-header .cat-icon {
+      font-size: 24px;
+    }
+
+    .category-header h2 {
+      font-size: 16px;
+      color: #ddd;
+      font-weight: bold;
+    }
+
+    .category-header .cat-count {
+      color: #999;
+      font-size: 11px;
+      margin-left: auto;
+    }
+
+    /* All Products sidebar */
+    .all-products-layout {
+      display: flex;
+      gap: 0;
+      height: 100%;
+    }
+
+    .category-sidebar {
+      width: 140px;
+      background: #0a0a0a;
+      border-right: 1px solid #222;
+      padding: 8px 0;
+      flex-shrink: 0;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 11px;
+      color: #999;
+      transition: all 0.15s;
+    }
+
+    .sidebar-item:hover, .sidebar-item.active {
+      background: rgba(220, 38, 38, 0.1);
+      color: #fff;
+    }
+
+    .sidebar-item.active {
+      border-left: 2px solid var(--xp-red);
+    }
+
+    .sidebar-item .sb-icon {
+      font-size: 14px;
+    }
+
+    .all-products-content {
+      flex: 1;
+      overflow: auto;
+      padding: 12px;
+    }
+
+    /* ===== ABOUT WINDOW ===== */
+    .about-content {
+      padding: 16px;
+      text-align: center;
+    }
+
+    .about-content .about-logo {
+      font-family: 'Pixelify Sans', monospace;
+      font-size: 28px;
+      color: var(--xp-red);
+      margin-bottom: 16px;
+    }
+
+    .about-content .about-version {
+      color: #999;
+      font-size: 11px;
+      margin-bottom: 16px;
+    }
+
+    .about-content .about-text {
+      color: #999;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .about-content .about-credits {
+      color: #999;
+      font-size: 10px;
+      border-top: 1px solid #222;
+      padding-top: 12px;
+    }
+
+    /* ===== SOCIAL WINDOW ===== */
+    .social-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .social-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+
+    .social-card:hover {
+      border-color: var(--xp-red);
+      background: #1a0000;
+    }
+
+    .social-card .social-icon {
+      font-size: 28px;
+    }
+
+    .social-card .social-info h3 {
+      color: #ddd;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .social-card .social-info p {
+      color: #999;
+      font-size: 11px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .xp-window {
+        min-width: 280px;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 8px;
+      }
+
+      #start-menu {
+        width: calc(100vw - 10px);
+      }
+
+      .start-menu-right {
+        width: 130px;
+      }
+
+      .desktop-icons {
+        gap: 4px;
+        padding: 10px;
+      }
+
+      .desktop-icon {
+        width: 65px;
+      }
+    }
+
+    /* ===== ACCESSIBILITY ===== */
+
+    /* Skip to content link */
+    .skip-link {
+      position: fixed;
+      top: -100%;
+      left: 16px;
+      z-index: 100000;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 12px 24px;
+      border: 2px solid var(--xp-red);
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: top 0.2s;
+    }
+
+    .skip-link:focus {
+      top: 8px;
+      outline: 3px solid #fff;
+      outline-offset: 2px;
+    }
+
+    /* Focus indicators for keyboard navigation */
+    *:focus-visible {
+      outline: 2px solid #ff6666;
+      outline-offset: 2px;
+    }
+
+    .desktop-icon:focus-visible {
+      background: rgba(220, 38, 38, 0.2);
+      outline: 2px solid #ff6666;
+      outline-offset: 1px;
+      border-radius: 3px;
+    }
+
+    .menu-item:focus-visible {
+      background: rgba(220, 38, 38, 0.2);
+      outline: 2px solid #ff6666;
+      outline-offset: -2px;
+    }
+
+    .task-button:focus-visible {
+      outline: 2px solid #ff6666;
+      outline-offset: -1px;
+    }
+
+    .product-card:focus-visible {
+      outline: 2px solid #ff6666;
+      outline-offset: 2px;
+      border-color: var(--xp-red);
+    }
+
+    .ql-button:focus-visible {
+      outline: 2px solid #ff6666;
+      outline-offset: 1px;
+    }
+
+    .title-bar-buttons button:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 1px;
+    }
+
+    .social-card:focus-visible {
+      outline: 2px solid #ff6666;
+      outline-offset: 2px;
+    }
+
+    .welcome-link:focus-visible {
+      outline: 2px solid #ff6666;
+      outline-offset: 2px;
+    }
+
+    /* Respect prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      #boot-screen {
+        transition: none;
+      }
+
+      .glitch-text {
+        animation: none;
+        text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+      }
+
+      .xp-window.opening {
+        animation: none;
+      }
+
+      #desktop-wallpaper .fog {
+        animation: none;
+      }
+
+      #desktop::after {
+        animation: none;
+      }
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      :root {
+        --xp-text: #ffffff;
+        --xp-text-dim: #cccccc;
+      }
+
+      .product-card {
+        border-width: 2px;
+      }
+
+      .menu-item:hover,
+      .menu-item:focus-visible {
+        background: rgba(220, 38, 38, 0.3);
+      }
+
+      .desktop-icon .label {
+        color: #fff;
+      }
+
+      .product-desc {
+        color: #aaa;
+      }
+
+      .status-bar {
+        color: #aaa;
+      }
+    }
+
+    /* Screen reader only content */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ===== COOKIE BANNER ===== */
+    #cookie-banner {
+      position: fixed;
+      bottom: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100001;
+      background: #111;
+      border: 1px solid #3a0000;
+      border-radius: 6px;
+      padding: 16px 24px;
+      display: none;
+      align-items: center;
+      gap: 16px;
+      max-width: 680px;
+      width: calc(100% - 32px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+      font-size: 12px;
+      color: #ccc;
+      line-height: 1.5;
+    }
+
+    #cookie-banner.visible {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    #cookie-banner p {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    #cookie-banner a {
+      color: var(--xp-red);
+      text-decoration: underline;
+    }
+
+    #cookie-banner a:hover,
+    #cookie-banner a:focus-visible {
+      color: #ff6666;
+    }
+
+    .cookie-buttons {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .cookie-btn {
+      padding: 8px 18px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: inherit;
+      border: 1px solid #333;
+      transition: all 0.15s;
+    }
+
+    .cookie-btn-accept {
+      background: linear-gradient(to bottom, var(--xp-start-green-2), var(--xp-start-green-1));
+      color: #fff;
+      border-color: #5a0000;
+    }
+
+    .cookie-btn-accept:hover,
+    .cookie-btn-accept:focus-visible {
+      filter: brightness(1.15);
+    }
+
+    .cookie-btn-decline {
+      background: #1a1a1a;
+      color: #ccc;
+    }
+
+    .cookie-btn-decline:hover,
+    .cookie-btn-decline:focus-visible {
+      background: #222;
+      color: #fff;
+    }
+
+    /* ===== FREE SHIPPING BANNER ===== */
+    #promo-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background: linear-gradient(to right, #3a0000, #5a0a0a, #8b0000, #5a0a0a, #3a0000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9998;
+      border-bottom: 1px solid #4a0a0a;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    #promo-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent);
+      pointer-events: none;
+    }
+
+    #promo-banner .promo-text {
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+
+    #promo-banner .promo-text .promo-highlight {
+      color: #fca5a5;
+    }
+
+    #promo-banner .promo-close {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #fca5a5;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.15s;
+      padding: 2px 6px;
+      line-height: 1;
+    }
+
+    #promo-banner .promo-close:hover {
+      opacity: 1;
+    }
+
+    /* Offset desktop & wallpaper for promo banner */
+    #desktop {
+      top: 28px;
+    }
+
+    /* CRT flicker animation */
+    @keyframes flicker {
+      0% { opacity: 0.97; }
+      5% { opacity: 0.95; }
+      10% { opacity: 0.97; }
+      15% { opacity: 0.94; }
+      20% { opacity: 0.98; }
+      100% { opacity: 0.97; }
+    }
+
+    /* Glitch text effect for branding */
+    @keyframes glitch {
+      0% { text-shadow: 0 0 10px rgba(220, 38, 38, 0.3); }
+      20% { text-shadow: -2px 0 rgba(220, 38, 38, 0.5), 2px 0 rgba(0, 255, 255, 0.2); }
+      40% { text-shadow: 0 0 10px rgba(220, 38, 38, 0.3); }
+      60% { text-shadow: 2px 0 rgba(220, 38, 38, 0.5), -1px 0 rgba(0, 255, 255, 0.2); }
+      80% { text-shadow: 0 0 10px rgba(220, 38, 38, 0.3); }
+      100% { text-shadow: 0 0 10px rgba(220, 38, 38, 0.3); }
+    }
+
+    .glitch-text {
+      animation: glitch 4s infinite;
+    }
+
+    /* Window open animation */
+    @keyframes windowOpen {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .xp-window.opening {
+      animation: windowOpen 0.15s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip to main content (ADA keyboard navigation) -->
+  <a href="#desktop" class="skip-link" id="skip-link">Skip to main content</a>
+
+  <!-- ===== FREE SHIPPING BANNER ===== -->
+  <div id="promo-banner" role="banner" aria-label="Promotional offer">
+    <span class="promo-text">
+      <span class="promo-highlight" aria-hidden="true">★</span>
+      Free Shipping on US Orders <span class="promo-highlight">$75+</span>
+      <span class="promo-highlight" aria-hidden="true">★</span>
+    </span>
+    <button class="promo-close" onclick="closePromoBanner()" aria-label="Dismiss promotional banner">&times;</button>
+  </div>
+
+  <!-- ===== BOOT SCREEN ===== -->
+  <div id="boot-screen" role="alert" aria-live="polite" aria-label="Loading Nocturn Films Store">
+    <div class="boot-logo glitch-text" aria-hidden="true">NOCTURN</div>
+    <div class="boot-subtitle" aria-hidden="true">F I L M S &nbsp; S T O R E</div>
+    <div class="boot-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Loading progress" id="boot-progress-track">
+      <div class="boot-progress-bar" id="boot-progress"></div>
+    </div>
+    <div class="boot-text" id="boot-text" aria-live="polite">Loading system...</div>
+  </div>
+
+  <!-- ===== DESKTOP ===== -->
+  <main id="desktop" role="main" aria-label="Nocturn Films Store Desktop">
+    <!-- Horror Bliss Wallpaper (pure CSS, no license) -->
+    <div id="desktop-wallpaper" aria-hidden="true">
+      <div class="stars" id="stars-container"></div>
+      <div class="moon"></div>
+      <div class="hills">
+        <div class="hill-far"></div>
+        <div class="hill-mid"></div>
+        <div class="tree tree-1"></div>
+        <div class="tree tree-2"></div>
+        <div class="tree tree-3"></div>
+        <div class="tree tree-4"></div>
+        <div class="hill-near"></div>
+        <div class="ground"></div>
+      </div>
+      <div class="fog"></div>
+      <div class="vignette"></div>
+    </div>
+    <div class="desktop-icons" role="list" aria-label="Desktop shortcuts">
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('welcome')" onkeydown="handleIconKey(event, 'welcome')" aria-label="Nocturn Store - press Enter to open">
+        <span class="icon" aria-hidden="true">🎬</span>
+        <span class="label">Nocturn Store</span>
+      </div>
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('hats')" onkeydown="handleIconKey(event, 'hats')" aria-label="Hats - press Enter to open">
+        <span class="icon" aria-hidden="true">🧢</span>
+        <span class="label">Hats</span>
+      </div>
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('tshirts')" onkeydown="handleIconKey(event, 'tshirts')" aria-label="T-Shirts - press Enter to open">
+        <span class="icon" aria-hidden="true">👕</span>
+        <span class="label">T-Shirts</span>
+      </div>
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('sweatshirts')" onkeydown="handleIconKey(event, 'sweatshirts')" aria-label="Sweatshirts - press Enter to open">
+        <span class="icon" aria-hidden="true">🧥</span>
+        <span class="label">Sweatshirts</span>
+      </div>
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('jackets')" onkeydown="handleIconKey(event, 'jackets')" aria-label="Jackets - press Enter to open">
+        <span class="icon" aria-hidden="true">🧥</span>
+        <span class="label">Jackets</span>
+      </div>
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('crewnecks')" onkeydown="handleIconKey(event, 'crewnecks')" aria-label="Crewnecks - press Enter to open">
+        <span class="icon" aria-hidden="true">👔</span>
+        <span class="label">Crewnecks</span>
+      </div>
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('all-products')" onkeydown="handleIconKey(event, 'all-products')" aria-label="All Products - press Enter to open">
+        <span class="icon" aria-hidden="true">🛒</span>
+        <span class="label">All Products</span>
+      </div>
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('social')" onkeydown="handleIconKey(event, 'social')" aria-label="Connect - press Enter to open">
+        <span class="icon" aria-hidden="true">📡</span>
+        <span class="label">Connect</span>
+      </div>
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('about')" onkeydown="handleIconKey(event, 'about')" aria-label="About - press Enter to open">
+        <span class="icon" aria-hidden="true">💀</span>
+        <span class="label">About</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== TASKBAR ===== -->
+  <nav id="taskbar" role="navigation" aria-label="Taskbar">
+    <button id="start-button" onclick="toggleStartMenu()" aria-haspopup="true" aria-expanded="false" aria-controls="start-menu" aria-label="Start menu">
+      <span class="start-icon" aria-hidden="true">💀</span>
+      <span class="start-text">start</span>
+    </button>
+    <div id="quick-launch" role="toolbar" aria-label="Quick Launch">
+      <button class="ql-button" onclick="openWindow('welcome')" aria-label="Open Nocturn Store">
+        <span aria-hidden="true">🎬</span>
+        <span class="ql-tooltip" aria-hidden="true">Nocturn Store</span>
+      </button>
+      <button class="ql-button" onclick="openWindow('all-products')" aria-label="Open All Products">
+        <span aria-hidden="true">🛒</span>
+        <span class="ql-tooltip" aria-hidden="true">All Products</span>
+      </button>
+      <button class="ql-button" onclick="window.open('https://youtube.com/channel/UCZTzl4IEz3C-gIDure2XetQ','_blank')" aria-label="Open YouTube (opens in new tab)">
+        <span aria-hidden="true">📺</span>
+        <span class="ql-tooltip" aria-hidden="true">YouTube</span>
+      </button>
+      <button class="ql-button" onclick="window.open('https://instagram.com/nocturn.films/','_blank')" aria-label="Open Instagram (opens in new tab)">
+        <span aria-hidden="true">📷</span>
+        <span class="ql-tooltip" aria-hidden="true">Instagram</span>
+      </button>
+      <button class="ql-button" onclick="openWindow('social')" aria-label="Open Connect window">
+        <span aria-hidden="true">📡</span>
+        <span class="ql-tooltip" aria-hidden="true">Connect</span>
+      </button>
+      <button class="ql-button" onclick="showDesktop()" aria-label="Show Desktop - minimize all windows">
+        <span aria-hidden="true">🖥️</span>
+        <span class="ql-tooltip" aria-hidden="true">Show Desktop</span>
+      </button>
+    </div>
+    <div class="taskbar-grip" aria-hidden="true"></div>
+    <div id="task-buttons" role="tablist" aria-label="Open windows"></div>
+    <div id="system-tray" role="status" aria-label="System tray">
+      <div class="tray-expand" role="button" tabindex="0" aria-label="Show hidden icons">◀</div>
+      <div class="tray-icons" aria-label="System icons">
+        <button class="tray-icon" aria-label="Toggle ambient sound - currently off" onclick="toggleSound()" id="sound-toggle-btn">🔇</button>
+        <span class="tray-icon" aria-label="Nocturn Films" aria-hidden="true">🎬</span>
+        <span class="tray-icon" aria-label="Network connected" aria-hidden="true">📶</span>
+        <span class="tray-icon" aria-label="Security active" aria-hidden="true">🛡️</span>
+      </div>
+      <div class="tray-separator" aria-hidden="true"></div>
+      <div id="clock-area" aria-label="System clock">
+        <time id="clock" aria-live="off">12:00 AM</time>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== START MENU ===== -->
+  <div id="start-menu" role="menu" aria-label="Start menu" aria-hidden="true">
+    <div class="start-menu-header" aria-hidden="true">
+      <div class="avatar">💀</div>
+      <div class="user-name">Nocturn Films</div>
+    </div>
+    <div class="start-menu-body">
+      <div class="start-menu-left" role="group" aria-label="Programs">
+        <a class="menu-item" href="#" role="menuitem" onclick="openWindow('welcome'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">🎬</span>
+          <span class="item-text">
+            <span class="primary">Nocturn Store</span>
+            <span class="secondary">Welcome & featured</span>
+          </span>
+        </a>
+        <a class="menu-item" href="#" role="menuitem" onclick="openWindow('all-products'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">🛒</span>
+          <span class="item-text">
+            <span class="primary">All Products</span>
+            <span class="secondary">Browse everything</span>
+          </span>
+        </a>
+        <div class="start-menu-separator" role="separator"></div>
+        <a class="menu-item" href="#" role="menuitem" onclick="openWindow('hats'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">🧢</span>
+          <span class="item-text"><span class="primary">Hats</span></span>
+        </a>
+        <a class="menu-item" href="#" role="menuitem" onclick="openWindow('tshirts'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">👕</span>
+          <span class="item-text"><span class="primary">T-Shirts</span></span>
+        </a>
+        <a class="menu-item" href="#" role="menuitem" onclick="openWindow('sweatshirts'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">🧥</span>
+          <span class="item-text"><span class="primary">Sweatshirts</span></span>
+        </a>
+        <a class="menu-item" href="#" role="menuitem" onclick="openWindow('jackets'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">🧥</span>
+          <span class="item-text"><span class="primary">Jackets</span></span>
+        </a>
+        <a class="menu-item" href="#" role="menuitem" onclick="openWindow('crewnecks'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">👔</span>
+          <span class="item-text"><span class="primary">Crewnecks</span></span>
+        </a>
+      </div>
+      <div class="start-menu-right" role="group" aria-label="Links">
+        <a class="menu-item menu-item-small" href="#" role="menuitem" onclick="openWindow('social'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">📡</span>
+          <span>Connect</span>
+        </a>
+        <a class="menu-item menu-item-small" href="https://youtube.com/channel/UCZTzl4IEz3C-gIDure2XetQ" target="_blank" rel="noopener noreferrer" role="menuitem">
+          <span class="item-icon" aria-hidden="true">📺</span>
+          <span>YouTube<span class="sr-only"> (opens in new tab)</span></span>
+        </a>
+        <a class="menu-item menu-item-small" href="https://instagram.com/nocturn.films/" target="_blank" rel="noopener noreferrer" role="menuitem">
+          <span class="item-icon" aria-hidden="true">📷</span>
+          <span>Instagram<span class="sr-only"> (opens in new tab)</span></span>
+        </a>
+        <a class="menu-item menu-item-small" href="https://tiktok.com/@nocturn.films" target="_blank" rel="noopener noreferrer" role="menuitem">
+          <span class="item-icon" aria-hidden="true">🎵</span>
+          <span>TikTok<span class="sr-only"> (opens in new tab)</span></span>
+        </a>
+        <div class="start-menu-separator" role="separator"></div>
+        <a class="menu-item menu-item-small" href="https://nocturnfilms.com" target="_blank" rel="noopener noreferrer" role="menuitem">
+          <span class="item-icon" aria-hidden="true">🌐</span>
+          <span>Main Site<span class="sr-only"> (opens in new tab)</span></span>
+        </a>
+        <a class="menu-item menu-item-small" href="#" role="menuitem" onclick="openWindow('about'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">💀</span>
+          <span>About</span>
+        </a>
+      </div>
+    </div>
+    <div class="start-menu-footer">
+      <a class="menu-item" href="https://nocturnfilms.com" target="_blank" rel="noopener noreferrer" role="menuitem">
+        <span class="item-icon" aria-hidden="true">🔌</span>
+        <span>nocturnfilms.com<span class="sr-only"> (opens in new tab)</span></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== COOKIE CONSENT BANNER (GDPR/CCPA) ===== -->
+  <div id="cookie-banner" role="dialog" aria-label="Cookie consent" aria-describedby="cookie-msg">
+    <p id="cookie-msg">This site uses cookies to enhance your experience. By continuing, you agree to our <a href="#" onclick="openWindow('privacy'); return false;">Privacy Policy</a>. You can manage your preferences at any time.</p>
+    <div class="cookie-buttons">
+      <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()" aria-label="Accept cookies">Accept</button>
+      <button class="cookie-btn cookie-btn-decline" onclick="declineCookies()" aria-label="Decline optional cookies">Decline</button>
+    </div>
+  </div>
+
+  <!-- ===== WINDOW TEMPLATES (hidden, cloned by JS) ===== -->
+
+  <script>
+    // ===== WINDOW DEFINITIONS =====
+    const SHOP_URL = '#'; // Replace with your Shopify store URL
+
+    const windowDefs = {
+      welcome: {
+        title: 'Welcome to Nocturn Films Store',
+        icon: '🎬',
+        width: 600,
+        height: 450,
+        toolbar: false,
+        content: `
+          <div class="welcome-content">
+            <h1 class="glitch-text">NOCTURN FILMS</h1>
+            <div class="tagline">"You need to spend more time in the light..."</div>
+            <p>Welcome to the official Nocturn Films merch store. Gear up with horror-inspired apparel from the creators of Hospice, Echo, and The Candle Man.</p>
+            <p>Double-click any desktop icon or use the Start menu to browse our collections.</p>
+            <div class="welcome-links">
+              <a class="welcome-link" href="${SHOP_URL}" target="_blank">
+                <span class="link-icon">🛒</span> Visit Shopify Store
+              </a>
+              <a class="welcome-link" href="https://youtube.com/channel/UCZTzl4IEz3C-gIDure2XetQ" target="_blank">
+                <span class="link-icon">📺</span> Watch on YouTube
+              </a>
+              <a class="welcome-link" href="https://instagram.com/nocturn.films/" target="_blank">
+                <span class="link-icon">📷</span> Follow on Instagram
+              </a>
+            </div>
+          </div>
+        `
+      },
+      hats: {
+        title: 'Hats - Nocturn Films Store',
+        icon: '🧢',
+        width: 620,
+        height: 480,
+        toolbar: true,
+        address: 'N:\\Store\\Hats',
+        content: `
+          <div class="category-header">
+            <span class="cat-icon">🧢</span>
+            <h2>Hats</h2>
+            <span class="cat-count">4 items</span>
+          </div>
+          <div class="product-grid">
+            ${generateProduct('Nocturn Logo Snapback', 34.99, '🧢', '#1a0000', 'Classic snapback with embroidered Nocturn logo', 'NEW')}
+            ${generateProduct('Candle Man Dad Hat', 29.99, '🧢', '#0d1a0d', 'Washed black dad hat with Candle Man silhouette')}
+            ${generateProduct('Hospice Beanie', 27.99, '🧢', '#0d0d1a', 'Black knit beanie with red Hospice embroidery', 'POPULAR')}
+            ${generateProduct('Nocturn Trucker Cap', 32.99, '🧢', '#1a0a00', 'Mesh-back trucker with distressed logo patch')}
+          </div>
+        `
+      },
+      tshirts: {
+        title: 'T-Shirts - Nocturn Films Store',
+        icon: '👕',
+        width: 650,
+        height: 520,
+        toolbar: true,
+        address: 'N:\\Store\\T-Shirts',
+        content: `
+          <div class="category-header">
+            <span class="cat-icon">👕</span>
+            <h2>T-Shirts</h2>
+            <span class="cat-count">6 items</span>
+          </div>
+          <div class="product-grid">
+            ${generateProduct('Nocturn Logo Tee', 29.99, '👕', '#1a0000', 'Heavyweight cotton tee with chest logo', 'BESTSELLER')}
+            ${generateProduct('Hospice Graphic Tee', 34.99, '👕', '#1a0a0a', 'Front & back print featuring Hospice artwork')}
+            ${generateProduct('Echo Silhouette Tee', 32.99, '👕', '#0d0d1a', 'Minimalist Echo character outline on black')}
+            ${generateProduct('Candle Man Portrait Tee', 34.99, '👕', '#0d1a0d', 'Hand-drawn Candle Man illustration', 'NEW')}
+            ${generateProduct('"More Time in the Light" Tee', 27.99, '👕', '#1a1a0d', 'Tagline tee with distressed vintage print')}
+            ${generateProduct('Nocturn Skull Tee', 29.99, '👕', '#1a0d1a', 'Skull design with Nocturn Films branding')}
+          </div>
+        `
+      },
+      sweatshirts: {
+        title: 'Sweatshirts - Nocturn Films Store',
+        icon: '🧥',
+        width: 620,
+        height: 480,
+        toolbar: true,
+        address: 'N:\\Store\\Sweatshirts',
+        content: `
+          <div class="category-header">
+            <span class="cat-icon">🧥</span>
+            <h2>Sweatshirts</h2>
+            <span class="cat-count">4 items</span>
+          </div>
+          <div class="product-grid">
+            ${generateProduct('Nocturn Hoodie', 54.99, '🧥', '#1a0000', 'Heavyweight pullover hoodie with embroidered logo', 'POPULAR')}
+            ${generateProduct('Hospice Zip-Up Hoodie', 59.99, '🧥', '#0d0d1a', 'Full-zip hoodie with Hospice back print')}
+            ${generateProduct('Echo Oversized Hoodie', 57.99, '🧥', '#1a0a0a', 'Relaxed fit hoodie with Echo artwork', 'NEW')}
+            ${generateProduct('"Art of Horror" Hoodie', 52.99, '🧥', '#0d1a0d', 'Minimalist text hoodie with back detail')}
+          </div>
+        `
+      },
+      jackets: {
+        title: 'Jackets - Nocturn Films Store',
+        icon: '🧥',
+        width: 620,
+        height: 480,
+        toolbar: true,
+        address: 'N:\\Store\\Jackets',
+        content: `
+          <div class="category-header">
+            <span class="cat-icon">🧥</span>
+            <h2>Jackets</h2>
+            <span class="cat-count">3 items</span>
+          </div>
+          <div class="product-grid">
+            ${generateProduct('Nocturn Coach Jacket', 64.99, '🧥', '#1a0000', 'Lightweight coach jacket with back logo print', 'NEW')}
+            ${generateProduct('Candle Man Bomber', 79.99, '🧥', '#0d0d1a', 'Satin bomber with embroidered patches', 'LIMITED')}
+            ${generateProduct('Nocturn Windbreaker', 59.99, '🧥', '#1a0a0a', 'Packable windbreaker with reflective logo')}
+          </div>
+        `
+      },
+      crewnecks: {
+        title: 'Crewnecks - Nocturn Films Store',
+        icon: '👔',
+        width: 620,
+        height: 480,
+        toolbar: true,
+        address: 'N:\\Store\\Crewnecks',
+        content: `
+          <div class="category-header">
+            <span class="cat-icon">👔</span>
+            <h2>Crewnecks</h2>
+            <span class="cat-count">4 items</span>
+          </div>
+          <div class="product-grid">
+            ${generateProduct('Nocturn Classic Crewneck', 49.99, '👔', '#1a0000', 'Premium fleece crewneck with chest embroidery', 'BESTSELLER')}
+            ${generateProduct('Hospice Crewneck', 49.99, '👔', '#0d1a0d', 'Vintage wash crewneck with Hospice graphic')}
+            ${generateProduct('Echo Crewneck', 47.99, '👔', '#0d0d1a', 'Midweight crewneck with tonal Echo print', 'NEW')}
+            ${generateProduct('"Spend Time in the Light" Crew', 44.99, '👔', '#1a0a0a', 'Tagline crewneck in washed black')}
+          </div>
+        `
+      },
+      'all-products': {
+        title: 'All Products - Nocturn Films Store',
+        icon: '🛒',
+        width: 750,
+        height: 550,
+        toolbar: true,
+        address: 'N:\\Store\\All Products',
+        content: `
+          <div class="category-header">
+            <span class="cat-icon">🛒</span>
+            <h2>All Products</h2>
+            <span class="cat-count">25 items</span>
+          </div>
+          <div class="product-grid">
+            ${generateProduct('Nocturn Logo Snapback', 34.99, '🧢', '#1a0000', 'Classic snapback with embroidered Nocturn logo', 'NEW')}
+            ${generateProduct('Nocturn Logo Tee', 29.99, '👕', '#1a0000', 'Heavyweight cotton tee with chest logo', 'BESTSELLER')}
+            ${generateProduct('Nocturn Hoodie', 54.99, '🧥', '#1a0000', 'Heavyweight pullover hoodie with embroidered logo', 'POPULAR')}
+            ${generateProduct('Nocturn Classic Crewneck', 49.99, '👔', '#1a0000', 'Premium fleece crewneck with chest embroidery')}
+            ${generateProduct('Nocturn Coach Jacket', 64.99, '🧥', '#1a0a0a', 'Lightweight coach jacket with back logo print', 'NEW')}
+            ${generateProduct('Hospice Graphic Tee', 34.99, '👕', '#1a0a0a', 'Front & back print featuring Hospice artwork')}
+            ${generateProduct('Hospice Beanie', 27.99, '🧢', '#0d0d1a', 'Black knit beanie with red Hospice embroidery')}
+            ${generateProduct('Hospice Zip-Up Hoodie', 59.99, '🧥', '#0d0d1a', 'Full-zip hoodie with Hospice back print')}
+            ${generateProduct('Hospice Crewneck', 49.99, '👔', '#0d1a0d', 'Vintage wash crewneck with Hospice graphic')}
+            ${generateProduct('Echo Silhouette Tee', 32.99, '👕', '#0d0d1a', 'Minimalist Echo character outline on black')}
+            ${generateProduct('Echo Oversized Hoodie', 57.99, '🧥', '#1a0a0a', 'Relaxed fit hoodie with Echo artwork', 'NEW')}
+            ${generateProduct('Echo Crewneck', 47.99, '👔', '#0d0d1a', 'Midweight crewneck with tonal Echo print')}
+            ${generateProduct('Candle Man Portrait Tee', 34.99, '👕', '#0d1a0d', 'Hand-drawn Candle Man illustration')}
+            ${generateProduct('Candle Man Dad Hat', 29.99, '🧢', '#0d1a0d', 'Washed black dad hat with Candle Man silhouette')}
+            ${generateProduct('Candle Man Bomber', 79.99, '🧥', '#0d0d1a', 'Satin bomber with embroidered patches', 'LIMITED')}
+            ${generateProduct('"More Time in the Light" Tee', 27.99, '👕', '#1a1a0d', 'Tagline tee with distressed vintage print')}
+            ${generateProduct('"Spend Time in the Light" Crew', 44.99, '👔', '#1a0a0a', 'Tagline crewneck in washed black')}
+            ${generateProduct('"Art of Horror" Hoodie', 52.99, '🧥', '#0d1a0d', 'Minimalist text hoodie with back detail')}
+            ${generateProduct('Nocturn Skull Tee', 29.99, '👕', '#1a0d1a', 'Skull design with Nocturn Films branding')}
+            ${generateProduct('Nocturn Trucker Cap', 32.99, '🧢', '#1a0a00', 'Mesh-back trucker with distressed logo patch')}
+            ${generateProduct('Nocturn Windbreaker', 59.99, '🧥', '#1a0a0a', 'Packable windbreaker with reflective logo')}
+          </div>
+        `
+      },
+      social: {
+        title: 'Connect - Nocturn Films',
+        icon: '📡',
+        width: 420,
+        height: 380,
+        toolbar: false,
+        content: `
+          <div class="social-grid">
+            <a class="social-card" href="https://youtube.com/channel/UCZTzl4IEz3C-gIDure2XetQ" target="_blank">
+              <span class="social-icon">📺</span>
+              <div class="social-info">
+                <h3>YouTube</h3>
+                <p>Watch our horror short films</p>
+              </div>
+            </a>
+            <a class="social-card" href="https://instagram.com/nocturn.films/" target="_blank">
+              <span class="social-icon">📷</span>
+              <div class="social-info">
+                <h3>Instagram</h3>
+                <p>@nocturn.films - Behind the scenes</p>
+              </div>
+            </a>
+            <a class="social-card" href="https://tiktok.com/@nocturn.films" target="_blank">
+              <span class="social-icon">🎵</span>
+              <div class="social-info">
+                <h3>TikTok</h3>
+                <p>@nocturn.films - Short clips & more</p>
+              </div>
+            </a>
+            <a class="social-card" href="https://nocturnfilms.com" target="_blank">
+              <span class="social-icon">🌐</span>
+              <div class="social-info">
+                <h3>nocturnfilms.com</h3>
+                <p>Official website - Films, cast & crew</p>
+              </div>
+            </a>
+          </div>
+        `
+      },
+      about: {
+        title: 'About - Nocturn Films',
+        icon: '💀',
+        width: 400,
+        height: 350,
+        toolbar: false,
+        content: `
+          <div class="about-content">
+            <div class="about-logo glitch-text">NOCTURN FILMS</div>
+            <div class="about-version">Nocturn Store OS v1.0 | Build 666</div>
+            <div class="about-text">
+              The Art of Horror Short Films.<br><br>
+              Nocturn Films creates cinematic horror short films including
+              <strong>Hospice</strong>, <strong>Echo</strong>, and <strong>The Candle Man</strong>.<br><br>
+              This store features exclusive merch inspired by our films.
+            </div>
+            <div class="about-credits">
+              &copy; ${new Date().getFullYear()} Nocturn Films. All rights reserved.<br><br>
+              <a href="#" onclick="openWindow('privacy'); return false;" style="color:#dc2626;">Privacy Policy</a> &nbsp;|&nbsp;
+              <a href="#" onclick="openWindow('terms'); return false;" style="color:#dc2626;">Terms of Service</a> &nbsp;|&nbsp;
+              <a href="#" onclick="openWindow('accessibility'); return false;" style="color:#dc2626;">Accessibility</a>
+            </div>
+          </div>
+        `
+      },
+      privacy: {
+        title: 'Privacy Policy - Nocturn Films',
+        icon: '🔒',
+        width: 550,
+        height: 480,
+        toolbar: false,
+        content: `
+          <div style="padding:20px;color:#ccc;font-size:12px;line-height:1.8;">
+            <h2 style="color:#ddd;font-size:16px;margin-bottom:12px;">Privacy Policy</h2>
+            <p><strong>Last updated:</strong> ${new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})}</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">1. Information We Collect</h3>
+            <p>We may collect personal information you provide when making a purchase, including your name, email address, shipping address, and payment information. Payment processing is handled securely by our third-party provider (Shopify).</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">2. How We Use Your Information</h3>
+            <p>We use your information to process orders, communicate with you about your purchases, and improve our services. We do not sell your personal information to third parties.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">3. Cookies</h3>
+            <p>This site uses essential cookies for functionality. We may use analytics cookies to understand site usage. You can manage cookie preferences through the consent banner or your browser settings.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">4. Your Rights (CCPA/GDPR)</h3>
+            <p>You have the right to access, correct, or delete your personal data. California residents and EU citizens have additional rights under the CCPA and GDPR respectively. Contact us at the email below to exercise these rights.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">5. Data Security</h3>
+            <p>We implement industry-standard security measures to protect your information. All transactions are encrypted via SSL/TLS.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">6. Third-Party Services</h3>
+            <p>Our store is hosted on Shopify, which has its own privacy policy. Links to external sites (YouTube, Instagram, TikTok) are governed by their respective privacy policies.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">7. Contact</h3>
+            <p>For privacy inquiries, contact us at: <strong>privacy@nocturnfilms.com</strong></p>
+          </div>
+        `
+      },
+      terms: {
+        title: 'Terms of Service - Nocturn Films',
+        icon: '📋',
+        width: 550,
+        height: 480,
+        toolbar: false,
+        content: `
+          <div style="padding:20px;color:#ccc;font-size:12px;line-height:1.8;">
+            <h2 style="color:#ddd;font-size:16px;margin-bottom:12px;">Terms of Service</h2>
+            <p><strong>Last updated:</strong> ${new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})}</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">1. Acceptance of Terms</h3>
+            <p>By accessing and using this website, you accept and agree to be bound by these Terms of Service. If you do not agree, please do not use this site.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">2. Products & Purchases</h3>
+            <p>All purchases are processed through our Shopify store. Product images are for illustration purposes. Colors may vary slightly from screen to screen. Prices are subject to change without notice.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">3. Returns & Exchanges</h3>
+            <p>We accept returns within 30 days of purchase for unworn, unwashed items in original condition. Contact us to initiate a return. Shipping costs for returns are the customer's responsibility unless the item is defective.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">4. Intellectual Property</h3>
+            <p>All content on this site, including logos, designs, text, and graphics, is the property of Nocturn Films and is protected by copyright and trademark laws. Unauthorized use is prohibited.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">5. Limitation of Liability</h3>
+            <p>Nocturn Films shall not be liable for any indirect, incidental, or consequential damages arising from the use of this website or purchase of products. Our maximum liability is limited to the purchase price of the product in question.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">6. Governing Law</h3>
+            <p>These terms are governed by the laws of the United States. Any disputes will be resolved in accordance with applicable law.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">7. Contact</h3>
+            <p>For questions about these terms, contact us at: <strong>legal@nocturnfilms.com</strong></p>
+          </div>
+        `
+      },
+      accessibility: {
+        title: 'Accessibility Statement - Nocturn Films',
+        icon: '📄',
+        width: 550,
+        height: 480,
+        toolbar: false,
+        content: `
+          <div style="padding:20px;color:#ccc;font-size:12px;line-height:1.8;">
+            <h2 style="color:#ddd;font-size:16px;margin-bottom:12px;">Accessibility Statement</h2>
+            <p><strong>Last updated:</strong> ${new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})}</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Our Commitment</h3>
+            <p>Nocturn Films is committed to ensuring digital accessibility for people with disabilities. We continually improve the user experience for everyone and apply the relevant accessibility standards.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Standards</h3>
+            <p>This website aims to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA. These guidelines explain how to make web content more accessible for people with disabilities.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Accessibility Features</h3>
+            <ul style="padding-left:20px;margin:8px 0;">
+              <li>Full keyboard navigation support</li>
+              <li>Skip-to-content link for screen readers</li>
+              <li>ARIA labels and roles for interactive elements</li>
+              <li>Visible focus indicators for keyboard users</li>
+              <li>Respects prefers-reduced-motion settings</li>
+              <li>High contrast mode support</li>
+              <li>Screen reader compatible content structure</li>
+              <li>External links are clearly identified</li>
+              <li>Sound is off by default and user-controllable</li>
+            </ul>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Known Limitations</h3>
+            <p>The Windows XP desktop interface uses drag-and-drop interactions that may be difficult for some assistive technology users. All content is alternatively accessible via the Start menu and keyboard navigation.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Feedback</h3>
+            <p>We welcome your feedback on the accessibility of this site. If you encounter barriers, please contact us at: <strong>accessibility@nocturnfilms.com</strong></p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Enforcement</h3>
+            <p>If you are not satisfied with our response, you may contact your local enforcement body or the relevant disability rights organization.</p>
+          </div>
+        `
+      }
+    };
+
+    function generateProduct(name, price, icon, bgColor, desc, badge) {
+      const badgeHtml = badge ? `<div class="product-badge" aria-label="${badge}">${badge}</div>` : '';
+      return `
+        <a class="product-card" href="${SHOP_URL}" target="_blank" rel="noopener noreferrer" aria-label="${name} - $${price.toFixed(2)}${badge ? ' - ' + badge : ''}" style="text-decoration:none;color:inherit;">
+          <div class="product-image" aria-hidden="true">
+            <div class="product-bg" style="background: radial-gradient(circle at center, ${bgColor}, #0a0a0a);"></div>
+            <span class="product-icon">${icon}</span>
+            ${badgeHtml}
+          </div>
+          <div class="product-info">
+            <div class="product-name">${name}</div>
+            <div class="product-price">$${price.toFixed(2)}</div>
+            <div class="product-desc">${desc}</div>
+          </div>
+        </a>
+      `;
+    }
+
+    // ===== WINDOW MANAGEMENT =====
+    let windows = {};
+    let windowOrder = [];
+    let highestZ = 100;
+    let dragState = null;
+    let resizeState = null;
+
+    function createWindowElement(id, def) {
+      const win = document.createElement('div');
+      win.className = 'xp-window opening';
+      win.id = `window-${id}`;
+      win.setAttribute('role', 'dialog');
+      win.setAttribute('aria-label', def.title);
+      win.style.width = def.width + 'px';
+      win.style.height = def.height + 'px';
+
+      // Position with offset based on number of open windows
+      const offset = Object.keys(windows).length * 30;
+      win.style.left = (80 + offset % 300) + 'px';
+      win.style.top = (40 + offset % 200) + 'px';
+
+      let toolbarHtml = '';
+      if (def.toolbar) {
+        toolbarHtml = `
+          <div class="window-toolbar" role="menubar" aria-label="Window menu">
+            <span role="menuitem" tabindex="0">File</span>
+            <span role="menuitem" tabindex="0">Edit</span>
+            <span role="menuitem" tabindex="0">View</span>
+            <span role="menuitem" tabindex="0">Favorites</span>
+            <span role="menuitem" tabindex="0">Help</span>
+          </div>
+          <div class="address-bar">
+            <label for="addr-${id}">Address</label>
+            <input id="addr-${id}" type="text" value="${def.address || 'N:\\\\Store'}" readonly aria-label="Current folder path">
+          </div>
+        `;
+      }
+
+      win.innerHTML = `
+        <div class="title-bar" data-window="${id}">
+          <span class="icon" aria-hidden="true">${def.icon}</span>
+          <span class="title" id="title-${id}">${def.title}</span>
+          <div class="title-bar-buttons">
+            <button class="btn-minimize" onclick="minimizeWindow('${id}')" aria-label="Minimize ${def.title}">_</button>
+            <button class="btn-maximize" onclick="maximizeWindow('${id}')" aria-label="Maximize ${def.title}">☐</button>
+            <button class="btn-close" onclick="closeWindow('${id}')" aria-label="Close ${def.title}">✕</button>
+          </div>
+        </div>
+        ${toolbarHtml}
+        <div class="window-content" tabindex="0" role="region" aria-label="${def.title} content">${def.content}</div>
+        <div class="status-bar" aria-live="polite">
+          <span>${Object.keys(windows).length + 1} window(s) open</span>
+          <span>Nocturn Films Store</span>
+        </div>
+        <div class="resize-handle" data-window="${id}" aria-hidden="true"></div>
+      `;
+
+      // Remove opening animation class after it plays
+      setTimeout(() => win.classList.remove('opening'), 150);
+
+      return win;
+    }
+
+    function openWindow(id) {
+      // If window exists, just focus it
+      if (windows[id]) {
+        if (windows[id].element.classList.contains('minimized')) {
+          windows[id].element.classList.remove('minimized');
+        }
+        focusWindow(id);
+        return;
+      }
+
+      const def = windowDefs[id];
+      if (!def) return;
+
+      const el = createWindowElement(id, def);
+      document.getElementById('desktop').appendChild(el);
+
+      windows[id] = { element: el, def: def, maximized: false };
+      windowOrder.push(id);
+      focusWindow(id);
+      updateTaskButtons();
+
+      // Focus the window content for keyboard users
+      const content = el.querySelector('.window-content');
+      if (content) content.focus();
+
+      announceToSR(`${def.title} window opened`);
+    }
+
+    function closeWindow(id) {
+      if (!windows[id]) return;
+      const title = windows[id].def.title;
+      windows[id].element.remove();
+      delete windows[id];
+      windowOrder = windowOrder.filter(w => w !== id);
+      updateTaskButtons();
+      announceToSR(`${title} window closed`);
+      if (windowOrder.length > 0) {
+        focusWindow(windowOrder[windowOrder.length - 1]);
+      }
+    }
+
+    function minimizeWindow(id) {
+      if (!windows[id]) return;
+      windows[id].element.classList.add('minimized');
+      windows[id].element.classList.remove('active');
+      windows[id].element.setAttribute('aria-hidden', 'true');
+      updateTaskButtons();
+
+      // Focus next visible window
+      for (let i = windowOrder.length - 1; i >= 0; i--) {
+        const wid = windowOrder[i];
+        if (wid !== id && windows[wid] && !windows[wid].element.classList.contains('minimized')) {
+          focusWindow(wid);
+          return;
+        }
+      }
+    }
+
+    function maximizeWindow(id) {
+      if (!windows[id]) return;
+      const win = windows[id];
+      if (win.maximized) {
+        win.element.classList.remove('maximized');
+        win.maximized = false;
+      } else {
+        win.element.classList.add('maximized');
+        win.maximized = true;
+      }
+    }
+
+    function focusWindow(id) {
+      if (!windows[id]) return;
+      // Deactivate all
+      Object.values(windows).forEach(w => w.element.classList.remove('active'));
+      // Activate this one
+      highestZ++;
+      windows[id].element.style.zIndex = highestZ;
+      windows[id].element.classList.add('active');
+      windows[id].element.removeAttribute('aria-hidden');
+
+      // Move to end of order
+      windowOrder = windowOrder.filter(w => w !== id);
+      windowOrder.push(id);
+      updateTaskButtons();
+    }
+
+    function updateTaskButtons() {
+      const container = document.getElementById('task-buttons');
+      container.innerHTML = '';
+      Object.entries(windows).forEach(([id, win]) => {
+        const isActive = win.element.classList.contains('active');
+        const isMinimized = win.element.classList.contains('minimized');
+        const btn = document.createElement('button');
+        btn.className = 'task-button' + (isActive ? ' active' : '');
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.setAttribute('aria-label', `${win.def.title.split(' - ')[0]}${isMinimized ? ' (minimized)' : ''}`);
+        btn.innerHTML = `<span class="icon" aria-hidden="true">${win.def.icon}</span><span class="text">${win.def.title.split(' - ')[0]}</span>`;
+        btn.onclick = () => {
+          if (win.element.classList.contains('minimized')) {
+            win.element.classList.remove('minimized');
+            win.element.removeAttribute('aria-hidden');
+            focusWindow(id);
+          } else if (win.element.classList.contains('active')) {
+            minimizeWindow(id);
+          } else {
+            focusWindow(id);
+          }
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    // ===== DRAG & DROP WINDOWS =====
+    document.addEventListener('mousedown', (e) => {
+      const titleBar = e.target.closest('.title-bar');
+      const resizeHandle = e.target.closest('.resize-handle');
+
+      if (titleBar && !e.target.closest('.title-bar-buttons')) {
+        const windowId = titleBar.dataset.window;
+        if (windows[windowId] && !windows[windowId].maximized) {
+          const win = windows[windowId].element;
+          const rect = win.getBoundingClientRect();
+          dragState = {
+            id: windowId,
+            startX: e.clientX,
+            startY: e.clientY,
+            origLeft: rect.left,
+            origTop: rect.top
+          };
+          focusWindow(windowId);
+          e.preventDefault();
+        }
+      }
+
+      if (resizeHandle) {
+        const windowId = resizeHandle.dataset.window;
+        if (windows[windowId] && !windows[windowId].maximized) {
+          const win = windows[windowId].element;
+          resizeState = {
+            id: windowId,
+            startX: e.clientX,
+            startY: e.clientY,
+            origW: win.offsetWidth,
+            origH: win.offsetHeight
+          };
+          focusWindow(windowId);
+          e.preventDefault();
+        }
+      }
+
+      // Focus window on click
+      const winEl = e.target.closest('.xp-window');
+      if (winEl) {
+        const id = winEl.id.replace('window-', '');
+        if (windows[id]) focusWindow(id);
+      }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (dragState) {
+        const dx = e.clientX - dragState.startX;
+        const dy = e.clientY - dragState.startY;
+        const win = windows[dragState.id].element;
+        win.style.left = (dragState.origLeft + dx) + 'px';
+        win.style.top = (dragState.origTop + dy) + 'px';
+      }
+      if (resizeState) {
+        const dx = e.clientX - resizeState.startX;
+        const dy = e.clientY - resizeState.startY;
+        const win = windows[resizeState.id].element;
+        win.style.width = Math.max(300, resizeState.origW + dx) + 'px';
+        win.style.height = Math.max(200, resizeState.origH + dy) + 'px';
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      dragState = null;
+      resizeState = null;
+    });
+
+    // ===== START MENU =====
+    function toggleStartMenu() {
+      const menu = document.getElementById('start-menu');
+      const btn = document.getElementById('start-button');
+      if (menu.classList.contains('open')) {
+        closeStartMenu();
+      } else {
+        menu.classList.add('open');
+        btn.classList.add('active');
+        btn.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        // Focus first menu item for keyboard users
+        const firstItem = menu.querySelector('.menu-item');
+        if (firstItem) firstItem.focus();
+      }
+    }
+
+    function closeStartMenu() {
+      const menu = document.getElementById('start-menu');
+      const btn = document.getElementById('start-button');
+      menu.classList.remove('open');
+      btn.classList.remove('active');
+      btn.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+    }
+
+    // Close start menu when clicking elsewhere
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#start-menu') && !e.target.closest('#start-button')) {
+        closeStartMenu();
+      }
+    });
+
+    // Keyboard navigation in start menu
+    document.getElementById('start-menu').addEventListener('keydown', (e) => {
+      const items = [...document.querySelectorAll('#start-menu .menu-item')];
+      const current = document.activeElement;
+      const idx = items.indexOf(current);
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const next = idx < items.length - 1 ? idx + 1 : 0;
+        items[next].focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prev = idx > 0 ? idx - 1 : items.length - 1;
+        items[prev].focus();
+      } else if (e.key === 'Escape') {
+        closeStartMenu();
+        document.getElementById('start-button').focus();
+      } else if (e.key === 'Tab') {
+        // Trap focus within start menu
+        const firstItem = items[0];
+        const lastItem = items[items.length - 1];
+        if (e.shiftKey && current === firstItem) {
+          e.preventDefault();
+          lastItem.focus();
+        } else if (!e.shiftKey && current === lastItem) {
+          e.preventDefault();
+          firstItem.focus();
+        }
+      }
+    });
+
+    // ===== CLOCK =====
+    function updateClock() {
+      const now = new Date();
+      const h = now.getHours();
+      const m = now.getMinutes().toString().padStart(2, '0');
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const h12 = h % 12 || 12;
+      document.getElementById('clock').textContent = `${h12}:${m} ${ampm}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ===== HORROR AMBIENT SOUND ENGINE (procedural, CC0, no licensing) =====
+    let soundEnabled = false;
+    let audioCtx = null;
+    let masterGain = null;
+    let ambientNodes = [];
+    let ambientIntervals = [];
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('sound-toggle-btn');
+      btn.textContent = soundEnabled ? '🔊' : '🔇';
+      btn.setAttribute('aria-label', 'Toggle ambient sound - currently ' + (soundEnabled ? 'on' : 'off'));
+
+      // Announce to screen readers
+      announceToSR(soundEnabled ? 'Ambient sound enabled' : 'Ambient sound disabled');
+
+      if (soundEnabled) {
+        startAmbientHorror();
+      } else {
+        stopAmbientHorror();
+      }
+    }
+
+    // Screen reader announcement helper
+    function announceToSR(message) {
+      let announcer = document.getElementById('sr-announcer');
+      if (!announcer) {
+        announcer = document.createElement('div');
+        announcer.id = 'sr-announcer';
+        announcer.setAttribute('role', 'status');
+        announcer.setAttribute('aria-live', 'polite');
+        announcer.setAttribute('aria-atomic', 'true');
+        announcer.className = 'sr-only';
+        document.body.appendChild(announcer);
+      }
+      announcer.textContent = '';
+      setTimeout(() => { announcer.textContent = message; }, 100);
+    }
+
+    function startAmbientHorror() {
+      try {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+        masterGain.gain.linearRampToValueAtTime(0.35, audioCtx.currentTime + 2);
+        masterGain.connect(audioCtx.destination);
+
+        // === LAYER 1: Deep sub-bass drone (fundamental) ===
+        const drone1 = audioCtx.createOscillator();
+        const drone1Gain = audioCtx.createGain();
+        drone1.type = 'sine';
+        drone1.frequency.setValueAtTime(55, audioCtx.currentTime); // A1
+        drone1Gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+        drone1.connect(drone1Gain);
+        drone1Gain.connect(masterGain);
+        drone1.start();
+        ambientNodes.push(drone1, drone1Gain);
+
+        // Slow pitch drift on the drone
+        const droneLFO = audioCtx.createOscillator();
+        const droneLFOGain = audioCtx.createGain();
+        droneLFO.type = 'sine';
+        droneLFO.frequency.setValueAtTime(0.05, audioCtx.currentTime);
+        droneLFOGain.gain.setValueAtTime(2, audioCtx.currentTime);
+        droneLFO.connect(droneLFOGain);
+        droneLFOGain.connect(drone1.frequency);
+        droneLFO.start();
+        ambientNodes.push(droneLFO, droneLFOGain);
+
+        // === LAYER 2: Eerie fifth drone (dark harmony) ===
+        const drone2 = audioCtx.createOscillator();
+        const drone2Gain = audioCtx.createGain();
+        drone2.type = 'triangle';
+        drone2.frequency.setValueAtTime(82.41, audioCtx.currentTime); // E2 (tritone-ish)
+        drone2Gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        drone2.connect(drone2Gain);
+        drone2Gain.connect(masterGain);
+        drone2.start();
+        ambientNodes.push(drone2, drone2Gain);
+
+        // === LAYER 3: Dissonant high tone ===
+        const highTone = audioCtx.createOscillator();
+        const highGain = audioCtx.createGain();
+        const highFilter = audioCtx.createBiquadFilter();
+        highTone.type = 'sawtooth';
+        highTone.frequency.setValueAtTime(440, audioCtx.currentTime);
+        highFilter.type = 'lowpass';
+        highFilter.frequency.setValueAtTime(600, audioCtx.currentTime);
+        highFilter.Q.setValueAtTime(8, audioCtx.currentTime);
+        highGain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+        highTone.connect(highFilter);
+        highFilter.connect(highGain);
+        highGain.connect(masterGain);
+        highTone.start();
+        ambientNodes.push(highTone, highGain, highFilter);
+
+        // Slow filter sweep on the high tone
+        const filterLFO = audioCtx.createOscillator();
+        const filterLFOGain = audioCtx.createGain();
+        filterLFO.type = 'sine';
+        filterLFO.frequency.setValueAtTime(0.03, audioCtx.currentTime);
+        filterLFOGain.gain.setValueAtTime(400, audioCtx.currentTime);
+        filterLFO.connect(filterLFOGain);
+        filterLFOGain.connect(highFilter.frequency);
+        filterLFO.start();
+        ambientNodes.push(filterLFO, filterLFOGain);
+
+        // === LAYER 4: Wind / noise texture ===
+        const noiseBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 4, audioCtx.sampleRate);
+        const noiseData = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < noiseData.length; i++) {
+          noiseData[i] = (Math.random() * 2 - 1);
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = noiseBuffer;
+        noise.loop = true;
+        const noiseFilter = audioCtx.createBiquadFilter();
+        noiseFilter.type = 'bandpass';
+        noiseFilter.frequency.setValueAtTime(300, audioCtx.currentTime);
+        noiseFilter.Q.setValueAtTime(0.5, audioCtx.currentTime);
+        const noiseGain = audioCtx.createGain();
+        noiseGain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        noise.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(masterGain);
+        noise.start();
+        ambientNodes.push(noise, noiseFilter, noiseGain);
+
+        // Wind modulation
+        const windLFO = audioCtx.createOscillator();
+        const windLFOGain = audioCtx.createGain();
+        windLFO.type = 'sine';
+        windLFO.frequency.setValueAtTime(0.1, audioCtx.currentTime);
+        windLFOGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        windLFO.connect(windLFOGain);
+        windLFOGain.connect(noiseGain.gain);
+        windLFO.start();
+        ambientNodes.push(windLFO, windLFOGain);
+
+        // === LAYER 5: Reverb via convolution (generated impulse response) ===
+        const reverbLength = 3;
+        const reverbBuffer = audioCtx.createBuffer(2, audioCtx.sampleRate * reverbLength, audioCtx.sampleRate);
+        for (let ch = 0; ch < 2; ch++) {
+          const data = reverbBuffer.getChannelData(ch);
+          for (let i = 0; i < data.length; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 2.5);
+          }
+        }
+        const reverb = audioCtx.createConvolver();
+        reverb.buffer = reverbBuffer;
+        const reverbGain = audioCtx.createGain();
+        reverbGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+
+        // Route some signals through reverb
+        const reverbSend = audioCtx.createGain();
+        reverbSend.gain.setValueAtTime(0.4, audioCtx.currentTime);
+        drone2Gain.connect(reverbSend);
+        highGain.connect(reverbSend);
+        reverbSend.connect(reverb);
+        reverb.connect(reverbGain);
+        reverbGain.connect(masterGain);
+        ambientNodes.push(reverb, reverbGain, reverbSend);
+
+        // === LAYER 6: Random eerie events (bells, whispers, creaks) ===
+        function playRandomEvent() {
+          if (!soundEnabled || !audioCtx) return;
+
+          const eventType = Math.random();
+
+          if (eventType < 0.35) {
+            // Ghostly bell / chime
+            const bellFreqs = [523.25, 659.25, 783.99, 1046.5, 1318.5]; // C5, E5, G5, C6, E6
+            const freq = bellFreqs[Math.floor(Math.random() * bellFreqs.length)];
+            // Detune slightly for eeriness
+            const detune = (Math.random() - 0.5) * 40;
+
+            const bell = audioCtx.createOscillator();
+            const bellGain = audioCtx.createGain();
+            const bellFilter = audioCtx.createBiquadFilter();
+            bell.type = 'sine';
+            bell.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            bell.detune.setValueAtTime(detune, audioCtx.currentTime);
+            bellFilter.type = 'highpass';
+            bellFilter.frequency.setValueAtTime(400, audioCtx.currentTime);
+            bellGain.gain.setValueAtTime(0, audioCtx.currentTime);
+            bellGain.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + 0.05);
+            bellGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 4);
+            bell.connect(bellFilter);
+            bellFilter.connect(bellGain);
+            bellGain.connect(reverbSend);
+            bellGain.connect(masterGain);
+            bell.start();
+            bell.stop(audioCtx.currentTime + 4.5);
+
+          } else if (eventType < 0.6) {
+            // Low rumble / distant thunder
+            const rumbleBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 3, audioCtx.sampleRate);
+            const rumbleData = rumbleBuffer.getChannelData(0);
+            for (let i = 0; i < rumbleData.length; i++) {
+              rumbleData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / rumbleData.length, 1.5);
+            }
+            const rumble = audioCtx.createBufferSource();
+            rumble.buffer = rumbleBuffer;
+            const rumbleFilter = audioCtx.createBiquadFilter();
+            rumbleFilter.type = 'lowpass';
+            rumbleFilter.frequency.setValueAtTime(80, audioCtx.currentTime);
+            const rumbleGain = audioCtx.createGain();
+            rumbleGain.gain.setValueAtTime(0, audioCtx.currentTime);
+            rumbleGain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.5);
+            rumbleGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3);
+            rumble.connect(rumbleFilter);
+            rumbleFilter.connect(rumbleGain);
+            rumbleGain.connect(masterGain);
+            rumble.start();
+
+          } else if (eventType < 0.8) {
+            // Dissonant string-like scrape
+            const scrape = audioCtx.createOscillator();
+            const scrapeGain = audioCtx.createGain();
+            const scrapeFilter = audioCtx.createBiquadFilter();
+            const startFreq = 200 + Math.random() * 600;
+            scrape.type = 'sawtooth';
+            scrape.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
+            scrape.frequency.exponentialRampToValueAtTime(startFreq * 0.5, audioCtx.currentTime + 3);
+            scrapeFilter.type = 'bandpass';
+            scrapeFilter.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
+            scrapeFilter.Q.setValueAtTime(12, audioCtx.currentTime);
+            scrapeGain.gain.setValueAtTime(0, audioCtx.currentTime);
+            scrapeGain.gain.linearRampToValueAtTime(0.015, audioCtx.currentTime + 0.3);
+            scrapeGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3);
+            scrape.connect(scrapeFilter);
+            scrapeFilter.connect(scrapeGain);
+            scrapeGain.connect(reverbSend);
+            scrape.start();
+            scrape.stop(audioCtx.currentTime + 3.5);
+
+          } else {
+            // Breathy whisper texture
+            const whisperBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 2, audioCtx.sampleRate);
+            const whisperData = whisperBuffer.getChannelData(0);
+            for (let i = 0; i < whisperData.length; i++) {
+              const env = Math.sin(Math.PI * i / whisperData.length);
+              whisperData[i] = (Math.random() * 2 - 1) * env * 0.5;
+            }
+            const whisper = audioCtx.createBufferSource();
+            whisper.buffer = whisperBuffer;
+            const whisperFilter = audioCtx.createBiquadFilter();
+            whisperFilter.type = 'bandpass';
+            whisperFilter.frequency.setValueAtTime(2000 + Math.random() * 2000, audioCtx.currentTime);
+            whisperFilter.Q.setValueAtTime(3, audioCtx.currentTime);
+            const whisperGain = audioCtx.createGain();
+            whisperGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+            whisper.connect(whisperFilter);
+            whisperFilter.connect(whisperGain);
+            whisperGain.connect(reverbSend);
+            whisper.start();
+          }
+        }
+
+        // Schedule random events every 3-8 seconds
+        function scheduleEvent() {
+          if (!soundEnabled) return;
+          playRandomEvent();
+          const nextTime = 3000 + Math.random() * 5000;
+          const id = setTimeout(scheduleEvent, nextTime);
+          ambientIntervals.push(id);
+        }
+
+        // Start first event after a short delay
+        const startId = setTimeout(scheduleEvent, 2000);
+        ambientIntervals.push(startId);
+
+        // === LAYER 7: Slow chord swells (Cm -> Abmaj -> Fm cycle) ===
+        const chordProgression = [
+          [130.81, 155.56, 196.00],  // Cm  (C3, Eb3, G3)
+          [103.83, 130.81, 155.56],  // Ab  (Ab2, C3, Eb3)
+          [87.31, 110.00, 130.81],   // Fm  (F2, A2, C3)
+          [116.54, 138.59, 174.61],  // Bbm (Bb2, Db3, F3)
+        ];
+        let chordIndex = 0;
+
+        function playChordSwell() {
+          if (!soundEnabled || !audioCtx) return;
+          const chord = chordProgression[chordIndex % chordProgression.length];
+          chordIndex++;
+
+          chord.forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = i === 0 ? 'triangle' : 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            // Subtle detune for width
+            osc.detune.setValueAtTime((Math.random() - 0.5) * 15, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 4);
+            gain.gain.linearRampToValueAtTime(0.03, audioCtx.currentTime + 8);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 12);
+            osc.connect(gain);
+            gain.connect(reverbSend);
+            gain.connect(masterGain);
+            osc.start(audioCtx.currentTime);
+            osc.stop(audioCtx.currentTime + 13);
+          });
+        }
+
+        // Play chord swells every 10-14 seconds
+        playChordSwell();
+        function scheduleChord() {
+          if (!soundEnabled) return;
+          playChordSwell();
+          const nextTime = 10000 + Math.random() * 4000;
+          const id = setTimeout(scheduleChord, nextTime);
+          ambientIntervals.push(id);
+        }
+        const chordStartId = setTimeout(scheduleChord, 11000);
+        ambientIntervals.push(chordStartId);
+
+      } catch (e) {
+        console.warn('Audio not supported:', e);
+      }
+    }
+
+    function stopAmbientHorror() {
+      // Clear all scheduled events
+      ambientIntervals.forEach(id => clearTimeout(id));
+      ambientIntervals = [];
+
+      // Fade out and stop
+      if (masterGain && audioCtx) {
+        masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+        setTimeout(() => {
+          ambientNodes.forEach(node => {
+            try {
+              if (node.stop) node.stop();
+              if (node.disconnect) node.disconnect();
+            } catch (e) {}
+          });
+          ambientNodes = [];
+          if (audioCtx) {
+            audioCtx.close().catch(() => {});
+            audioCtx = null;
+          }
+          masterGain = null;
+        }, 1200);
+      }
+    }
+
+    // ===== SHOW DESKTOP (Quick Launch) =====
+    let desktopShown = false;
+    function showDesktop() {
+      if (!desktopShown) {
+        Object.keys(windows).forEach(id => {
+          if (!windows[id].element.classList.contains('minimized')) {
+            windows[id].element.classList.add('minimized');
+          }
+        });
+        desktopShown = true;
+      } else {
+        Object.keys(windows).forEach(id => {
+          windows[id].element.classList.remove('minimized');
+        });
+        desktopShown = false;
+        if (windowOrder.length > 0) {
+          focusWindow(windowOrder[windowOrder.length - 1]);
+        }
+      }
+      updateTaskButtons();
+    }
+
+    // ===== GENERATE STARS =====
+    (function generateStars() {
+      const container = document.getElementById('stars-container');
+      const count = 80;
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.setProperty('--dur', (2 + Math.random() * 5) + 's');
+        star.style.setProperty('--delay', (Math.random() * 5) + 's');
+        star.style.setProperty('--max-opacity', (0.3 + Math.random() * 0.6).toString());
+        if (Math.random() > 0.7) {
+          star.style.width = '3px';
+          star.style.height = '3px';
+        }
+        container.appendChild(star);
+      }
+    })();
+
+    // ===== DESKTOP ICON SELECTION =====
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.desktop-icon')) {
+        document.querySelectorAll('.desktop-icon.selected').forEach(el => el.classList.remove('selected'));
+      }
+    });
+
+    document.querySelectorAll('.desktop-icon').forEach(icon => {
+      icon.addEventListener('click', (e) => {
+        document.querySelectorAll('.desktop-icon.selected').forEach(el => el.classList.remove('selected'));
+        icon.classList.add('selected');
+      });
+    });
+
+    // ===== BOOT SEQUENCE =====
+    const bootTexts = [
+      'Loading system...',
+      'Initializing Nocturn OS...',
+      'Loading horror modules...',
+      'Connecting to the darkness...',
+      'Mounting N:\\ drive...',
+      'Loading store inventory...',
+      'Preparing desktop...',
+      'Welcome to Nocturn Films.'
+    ];
+
+    let bootStep = 0;
+    const bootInterval = setInterval(() => {
+      bootStep++;
+      const progress = (bootStep / bootTexts.length) * 100;
+      document.getElementById('boot-progress').style.width = progress + '%';
+      document.getElementById('boot-text').textContent = bootTexts[Math.min(bootStep, bootTexts.length - 1)];
+
+      if (bootStep >= bootTexts.length) {
+        clearInterval(bootInterval);
+        setTimeout(() => {
+          document.getElementById('boot-screen').classList.add('fade-out');
+          setTimeout(() => {
+            document.getElementById('boot-screen').style.display = 'none';
+            // Auto-open welcome window
+            openWindow('welcome');
+          }, 500);
+        }, 250);
+      }
+    }, 230);
+
+    // ===== KEYBOARD SUPPORT FOR DESKTOP ICONS =====
+    function handleIconKey(event, windowId) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openWindow(windowId);
+      }
+    }
+
+    // ===== KEYBOARD SHORTCUTS =====
+    document.addEventListener('keydown', (e) => {
+      // Escape closes start menu or active window
+      if (e.key === 'Escape') {
+        const startMenu = document.getElementById('start-menu');
+        if (startMenu.classList.contains('open')) {
+          closeStartMenu();
+          document.getElementById('start-button').focus();
+        } else if (windowOrder.length > 0) {
+          const activeId = windowOrder[windowOrder.length - 1];
+          if (windows[activeId] && !windows[activeId].element.classList.contains('minimized')) {
+            closeWindow(activeId);
+          }
+        }
+      }
+
+      // Ctrl+M to toggle sound
+      if (e.ctrlKey && e.key === 'm') {
+        e.preventDefault();
+        toggleSound();
+      }
+    });
+
+    // ===== PROMO BANNER =====
+    function closePromoBanner() {
+      const banner = document.getElementById('promo-banner');
+      banner.style.transform = 'translateY(-100%)';
+      banner.style.transition = 'transform 0.3s ease';
+      setTimeout(() => {
+        banner.style.display = 'none';
+        document.getElementById('desktop').style.top = '0';
+      }, 300);
+    }
+
+    // ===== COOKIE CONSENT =====
+    function acceptCookies() {
+      document.getElementById('cookie-banner').classList.remove('visible');
+      try { localStorage.setItem('nocturn_cookies', 'accepted'); } catch(e) {}
+    }
+
+    function declineCookies() {
+      document.getElementById('cookie-banner').classList.remove('visible');
+      try { localStorage.setItem('nocturn_cookies', 'declined'); } catch(e) {}
+    }
+
+    // Show cookie banner if not previously answered
+    (function checkCookieConsent() {
+      try {
+        const consent = localStorage.getItem('nocturn_cookies');
+        if (!consent) {
+          // Show after boot sequence completes
+          setTimeout(() => {
+            document.getElementById('cookie-banner').classList.add('visible');
+          }, 3000);
+        }
+      } catch(e) {
+        // localStorage not available, show banner
+        setTimeout(() => {
+          document.getElementById('cookie-banner').classList.add('visible');
+        }, 4500);
+      }
+    })();
+
+    // ===== BOOT SCREEN ACCESSIBILITY =====
+    // Update progress bar aria values during boot
+    const origBootInterval = setInterval(() => {}, 0); // placeholder cleared immediately
+    clearInterval(origBootInterval);
+
+    // Update progress bar ARIA during boot
+    const bootObserver = new MutationObserver(() => {
+      const bar = document.getElementById('boot-progress');
+      const track = document.getElementById('boot-progress-track');
+      if (bar && track) {
+        const width = parseFloat(bar.style.width) || 0;
+        track.setAttribute('aria-valuenow', Math.round(width));
+      }
+    });
+    const bootBar = document.getElementById('boot-progress');
+    if (bootBar) {
+      bootObserver.observe(bootBar, { attributes: true, attributeFilter: ['style'] });
+    }
+  </script>
+
+
+</body>
+</html>
