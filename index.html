@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Official Nocturn Films merchandise store. Horror-inspired apparel including hats, t-shirts, sweatshirts, jackets, and crewnecks.">
+  <meta name="color-scheme" content="dark">
   <title>Nocturn Films - Official Merch Store</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Tahoma&family=Pixelify+Sans:wght@400;700&display=swap');
@@ -733,7 +734,7 @@
       );
       border: none;
       border-right: 1px solid #3a0000;
-      border-radius: 0 10px 10px 0;
+      border-radius: 10px;
       color: white;
       font-size: 13px;
       font-weight: bold;
@@ -1529,7 +1530,7 @@
       font-size: 11px;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===== RESPONSIVE - TABLET ===== */
     @media (max-width: 768px) {
       .xp-window {
         min-width: 280px;
@@ -1555,6 +1556,400 @@
 
       .desktop-icon {
         width: 65px;
+      }
+    }
+
+    /* ===== MOBILE LAYOUT ===== */
+    @media (max-width: 600px) {
+      /* Hide desktop wallpaper details for performance */
+      #desktop-wallpaper .tree,
+      #desktop-wallpaper .fog,
+      #desktop::before,
+      #desktop::after {
+        display: none;
+      }
+
+      /* Promo banner */
+      #promo-banner {
+        height: 24px;
+      }
+      #promo-banner .promo-text {
+        font-size: 10px;
+        letter-spacing: 0.5px;
+      }
+      #promo-banner .promo-close {
+        font-size: 12px;
+        right: 4px;
+      }
+
+      /* Desktop fills screen with smaller offset */
+      #desktop {
+        top: 24px !important;
+        bottom: 44px !important;
+      }
+
+      /* Desktop icons in a tight grid for mobile */
+      .desktop-icons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+        padding: 8px 4px;
+        max-height: none;
+        align-content: start;
+      }
+
+      .desktop-icon {
+        width: auto;
+        padding: 6px 2px;
+      }
+
+      .desktop-icon .icon {
+        font-size: 26px;
+        margin-bottom: 2px;
+      }
+
+      .desktop-icon .label {
+        font-size: 9px;
+      }
+
+      /* Taskbar compact */
+      #taskbar {
+        height: 40px;
+        bottom: 4px;
+      }
+      #taskbar::after {
+        height: 4px;
+        bottom: -4px;
+      }
+
+      /* Start button compact */
+      #start-button {
+        padding: 0 10px 0 6px;
+        margin-left: 4px;
+        border-radius: 8px;
+      }
+      #start-button .start-icon {
+        font-size: 18px;
+      }
+      #start-button .start-text {
+        font-size: 11px;
+        letter-spacing: 0.3px;
+      }
+
+      /* Hide quick launch on mobile - save space */
+      #quick-launch {
+        display: none;
+      }
+
+      /* Hide taskbar grip handles on mobile */
+      .taskbar-grip {
+        display: none;
+      }
+
+      /* Task buttons much smaller */
+      #task-buttons {
+        gap: 2px;
+        padding: 0 2px;
+      }
+      .task-button {
+        height: 28px;
+        min-width: 40px;
+        max-width: 100px;
+        padding: 0 6px;
+        font-size: 10px;
+      }
+      .task-button .text {
+        display: none;
+      }
+      .task-button .icon {
+        font-size: 14px;
+      }
+
+      /* System tray compact */
+      #system-tray {
+        gap: 4px;
+        padding: 0 2px 0 4px;
+      }
+      .tray-icon {
+        font-size: 13px;
+        width: 18px;
+        height: 18px;
+      }
+      .tray-separator {
+        margin: 0 2px;
+      }
+      #clock-area {
+        padding: 0 6px;
+        height: 28px;
+        min-width: 55px;
+      }
+      #clock {
+        font-size: 10px;
+      }
+
+      /* Windows go full-screen on mobile */
+      .xp-window {
+        position: fixed !important;
+        top: 24px !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: calc(100vh - 68px) !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        border-radius: 0 !important;
+        z-index: 100 !important;
+      }
+
+      .xp-window .title-bar {
+        border-radius: 0;
+        min-height: 36px;
+        padding: 3px 8px;
+      }
+
+      .xp-window .title-bar .title {
+        font-size: 13px;
+      }
+
+      .title-bar-buttons button {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+      }
+
+      /* Hide minimize/maximize on mobile - only close */
+      .btn-minimize,
+      .btn-maximize {
+        display: none;
+      }
+
+      /* Hide resize handle on mobile */
+      .resize-handle {
+        display: none;
+      }
+
+      /* Hide toolbar/address bar on mobile */
+      .window-toolbar,
+      .address-bar {
+        display: none;
+      }
+
+      .window-content {
+        padding: 8px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .status-bar {
+        padding: 2px 6px;
+        font-size: 10px;
+      }
+
+      /* Product grid - 2 columns */
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+        padding: 2px;
+      }
+
+      .product-info {
+        padding: 6px;
+      }
+
+      .product-name {
+        font-size: 11px;
+      }
+
+      .product-price {
+        font-size: 12px;
+      }
+
+      .product-desc {
+        font-size: 9px;
+      }
+
+      .product-badge {
+        font-size: 8px;
+        padding: 1px 4px;
+        top: 4px;
+        right: 4px;
+      }
+
+      .product-image {
+        font-size: 36px;
+      }
+
+      /* Start menu full-width */
+      #start-menu {
+        width: 100vw;
+        left: 0;
+        bottom: 44px;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .start-menu-header {
+        padding: 8px 10px;
+      }
+      .start-menu-header .avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+      .start-menu-header .user-name {
+        font-size: 13px;
+      }
+
+      .start-menu-body {
+        min-height: 0;
+        max-height: calc(100vh - 180px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-direction: column;
+      }
+
+      .start-menu-left {
+        border-right: none;
+        border-bottom: 1px solid #222;
+      }
+
+      .start-menu-right {
+        width: 100%;
+      }
+
+      .menu-item {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .menu-item .item-icon {
+        font-size: 22px;
+        width: 30px;
+      }
+
+      .menu-item-small {
+        padding: 7px 12px;
+      }
+
+      /* Welcome window adjustments */
+      .welcome-content {
+        padding: 12px 8px;
+      }
+      .welcome-content h1 {
+        font-size: 24px;
+      }
+      .welcome-content .tagline {
+        font-size: 11px;
+        margin-bottom: 12px;
+      }
+      .welcome-content p {
+        font-size: 11px;
+      }
+      .welcome-links {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .welcome-link {
+        justify-content: center;
+      }
+
+      /* Category headers compact */
+      .category-header {
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+      }
+      .category-header .cat-icon {
+        font-size: 18px;
+      }
+      .category-header h2 {
+        font-size: 14px;
+      }
+
+      /* All products layout vertical on mobile */
+      .all-products-layout {
+        flex-direction: column;
+      }
+      .category-sidebar {
+        width: 100%;
+        display: flex;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 4px 0;
+        border-right: none;
+        border-bottom: 1px solid #222;
+      }
+      .sidebar-item {
+        white-space: nowrap;
+        padding: 6px 10px;
+        flex-shrink: 0;
+      }
+      .sidebar-item.active {
+        border-left: none;
+        border-bottom: 2px solid var(--xp-red);
+      }
+      .all-products-content {
+        padding: 8px;
+      }
+
+      /* Social cards */
+      .social-grid {
+        padding: 4px;
+        gap: 6px;
+      }
+      .social-card {
+        padding: 10px 12px;
+        gap: 10px;
+      }
+      .social-card .social-icon {
+        font-size: 22px;
+      }
+      .social-card .social-info h3 {
+        font-size: 12px;
+      }
+      .social-card .social-info p {
+        font-size: 10px;
+      }
+
+      /* About window */
+      .about-content .about-logo {
+        font-size: 22px;
+      }
+      .about-content .about-text {
+        font-size: 11px;
+      }
+
+      /* Cookie banner mobile */
+      #cookie-banner {
+        bottom: 48px;
+        padding: 12px 14px;
+        gap: 10px;
+        font-size: 11px;
+        flex-direction: column;
+      }
+      #cookie-banner p {
+        min-width: 0;
+      }
+      .cookie-buttons {
+        width: 100%;
+      }
+      .cookie-btn {
+        flex: 1;
+        text-align: center;
+        padding: 10px 12px;
+      }
+
+      /* Legal text windows - readable on mobile */
+      .window-content h2 {
+        font-size: 14px !important;
+      }
+      .window-content h3 {
+        font-size: 12px !important;
+      }
+      .window-content p,
+      .window-content li {
+        font-size: 11px !important;
+      }
+
+      /* Tray expand chevron hidden on mobile */
+      .tray-expand {
+        display: none;
       }
     }
 
@@ -1690,6 +2085,14 @@
       .status-bar {
         color: #aaa;
       }
+    }
+
+    /* Mobile/desktop visibility helpers */
+    .desktop-hide { display: none; }
+    .mobile-hide { display: inline; }
+    @media (max-width: 600px) {
+      .desktop-hide { display: inline; }
+      .mobile-hide { display: none; }
     }
 
     /* Screen reader only content */
@@ -2012,12 +2415,8 @@
     <div class="taskbar-grip" aria-hidden="true"></div>
     <div id="task-buttons" role="tablist" aria-label="Open windows"></div>
     <div id="system-tray" role="status" aria-label="System tray">
-      <div class="tray-expand" role="button" tabindex="0" aria-label="Show hidden icons">◀</div>
       <div class="tray-icons" aria-label="System icons">
         <button class="tray-icon" aria-label="Toggle ambient sound - currently off" onclick="toggleSound()" id="sound-toggle-btn">🔇</button>
-        <span class="tray-icon" aria-label="Nocturn Films" aria-hidden="true">🎬</span>
-        <span class="tray-icon" aria-label="Network connected" aria-hidden="true">📶</span>
-        <span class="tray-icon" aria-label="Security active" aria-hidden="true">🛡️</span>
       </div>
       <div class="tray-separator" aria-hidden="true"></div>
       <div id="clock-area" aria-label="System clock">
@@ -2108,10 +2507,10 @@
 
   <!-- ===== COOKIE CONSENT BANNER (GDPR/CCPA) ===== -->
   <div id="cookie-banner" role="dialog" aria-label="Cookie consent" aria-describedby="cookie-msg">
-    <p id="cookie-msg">This site uses cookies to enhance your experience. By continuing, you agree to our <a href="#" onclick="openWindow('privacy'); return false;">Privacy Policy</a>. You can manage your preferences at any time.</p>
+    <p id="cookie-msg">This site uses essential cookies for basic functionality (these cannot be disabled). We may also use optional analytics cookies to understand how the site is used. Read our <a href="#" onclick="openWindow('privacy'); return false;">Privacy Policy</a> for details. <strong>We do not sell your personal information.</strong></p>
     <div class="cookie-buttons">
-      <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()" aria-label="Accept cookies">Accept</button>
-      <button class="cookie-btn cookie-btn-decline" onclick="declineCookies()" aria-label="Decline optional cookies">Decline</button>
+      <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()" aria-label="Accept all cookies including analytics">Accept All</button>
+      <button class="cookie-btn cookie-btn-decline" onclick="declineCookies()" aria-label="Accept only essential cookies, decline analytics">Essential Only</button>
     </div>
   </div>
 
@@ -2133,15 +2532,15 @@
             <h1 class="glitch-text">NOCTURN FILMS</h1>
             <div class="tagline">"You need to spend more time in the light..."</div>
             <p>Welcome to the official Nocturn Films merch store. Gear up with horror-inspired apparel from the creators of Hospice, Echo, and The Candle Man.</p>
-            <p>Double-click any desktop icon or use the Start menu to browse our collections.</p>
+            <p><span class="mobile-hide">Double-click any desktop icon or use the Start menu to browse our collections.</span><span class="desktop-hide">Tap any desktop icon or use the Start menu to browse our collections.</span></p>
             <div class="welcome-links">
-              <a class="welcome-link" href="${SHOP_URL}" target="_blank">
+              <a class="welcome-link" href="${SHOP_URL}" target="_blank" rel="noopener noreferrer">
                 <span class="link-icon">🛒</span> Visit Shopify Store
               </a>
-              <a class="welcome-link" href="https://youtube.com/channel/UCZTzl4IEz3C-gIDure2XetQ" target="_blank">
+              <a class="welcome-link" href="https://youtube.com/channel/UCZTzl4IEz3C-gIDure2XetQ" target="_blank" rel="noopener noreferrer">
                 <span class="link-icon">📺</span> Watch on YouTube
               </a>
-              <a class="welcome-link" href="https://instagram.com/nocturn.films/" target="_blank">
+              <a class="welcome-link" href="https://instagram.com/nocturn.films/" target="_blank" rel="noopener noreferrer">
                 <span class="link-icon">📷</span> Follow on Instagram
               </a>
             </div>
@@ -2300,28 +2699,28 @@
         toolbar: false,
         content: `
           <div class="social-grid">
-            <a class="social-card" href="https://youtube.com/channel/UCZTzl4IEz3C-gIDure2XetQ" target="_blank">
+            <a class="social-card" href="https://youtube.com/channel/UCZTzl4IEz3C-gIDure2XetQ" target="_blank" rel="noopener noreferrer">
               <span class="social-icon">📺</span>
               <div class="social-info">
                 <h3>YouTube</h3>
                 <p>Watch our horror short films</p>
               </div>
             </a>
-            <a class="social-card" href="https://instagram.com/nocturn.films/" target="_blank">
+            <a class="social-card" href="https://instagram.com/nocturn.films/" target="_blank" rel="noopener noreferrer">
               <span class="social-icon">📷</span>
               <div class="social-info">
                 <h3>Instagram</h3>
                 <p>@nocturn.films - Behind the scenes</p>
               </div>
             </a>
-            <a class="social-card" href="https://tiktok.com/@nocturn.films" target="_blank">
+            <a class="social-card" href="https://tiktok.com/@nocturn.films" target="_blank" rel="noopener noreferrer">
               <span class="social-icon">🎵</span>
               <div class="social-info">
                 <h3>TikTok</h3>
                 <p>@nocturn.films - Short clips & more</p>
               </div>
             </a>
-            <a class="social-card" href="https://nocturnfilms.com" target="_blank">
+            <a class="social-card" href="https://nocturnfilms.com" target="_blank" rel="noopener noreferrer">
               <span class="social-icon">🌐</span>
               <div class="social-info">
                 <h3>nocturnfilms.com</h3>
@@ -2348,10 +2747,12 @@
               This store features exclusive merch inspired by our films.
             </div>
             <div class="about-credits">
-              &copy; ${new Date().getFullYear()} Nocturn Films. All rights reserved.<br><br>
+              &copy; ${new Date().getFullYear()} Nocturn Films. All rights reserved.<br>
+              This site is intended for users aged 18+.<br><br>
               <a href="#" onclick="openWindow('privacy'); return false;" style="color:#dc2626;">Privacy Policy</a> &nbsp;|&nbsp;
               <a href="#" onclick="openWindow('terms'); return false;" style="color:#dc2626;">Terms of Service</a> &nbsp;|&nbsp;
-              <a href="#" onclick="openWindow('accessibility'); return false;" style="color:#dc2626;">Accessibility</a>
+              <a href="#" onclick="openWindow('accessibility'); return false;" style="color:#dc2626;">Accessibility</a><br>
+              <a href="#" onclick="openWindow('privacy'); return false;" style="color:#dc2626;">Do Not Sell My Personal Information</a>
             </div>
           </div>
         `
@@ -2359,8 +2760,8 @@
       privacy: {
         title: 'Privacy Policy - Nocturn Films',
         icon: '🔒',
-        width: 550,
-        height: 480,
+        width: 580,
+        height: 520,
         toolbar: false,
         content: `
           <div style="padding:20px;color:#ccc;font-size:12px;line-height:1.8;">
@@ -2368,33 +2769,62 @@
             <p><strong>Last updated:</strong> ${new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})}</p>
             <br>
             <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">1. Information We Collect</h3>
-            <p>We may collect personal information you provide when making a purchase, including your name, email address, shipping address, and payment information. Payment processing is handled securely by our third-party provider (Shopify).</p>
+            <p>We may collect personal information you provide when making a purchase, including your name, email address, shipping address, and payment information. <strong>We do not collect, store, or process credit card data.</strong> All payment processing is handled securely by Shopify, which maintains PCI DSS Level 1 compliance.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">2. How We Use Your Information</h3>
-            <p>We use your information to process orders, communicate with you about your purchases, and improve our services. We do not sell your personal information to third parties.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">2. Lawful Basis for Processing (GDPR Art. 6)</h3>
+            <p>We process personal data under the following legal bases: (a) <strong>Contract performance</strong> - to fulfill your product orders; (b) <strong>Legitimate interest</strong> - to improve our services and prevent fraud; (c) <strong>Consent</strong> - for optional analytics cookies, which you may withdraw at any time via the cookie banner.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">3. Cookies</h3>
-            <p>This site uses essential cookies for functionality. We may use analytics cookies to understand site usage. You can manage cookie preferences through the consent banner or your browser settings.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">3. How We Use Your Information</h3>
+            <p>We use your information to: process and fulfill orders, communicate about your purchases, send shipping notifications, prevent fraud, and improve our services. <strong>We do not sell, rent, or trade your personal information to third parties.</strong></p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">4. Your Rights (CCPA/GDPR)</h3>
-            <p>You have the right to access, correct, or delete your personal data. California residents and EU citizens have additional rights under the CCPA and GDPR respectively. Contact us at the email below to exercise these rights.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">4. Cookies & Tracking</h3>
+            <p>This site uses the following cookies:</p>
+            <ul style="padding-left:20px;margin:8px 0;">
+              <li><strong>Essential (always active):</strong> <em>nocturn_cookies</em> - stores your cookie consent preference (localStorage, persistent until cleared).</li>
+              <li><strong>Analytics (optional):</strong> If enabled, used to understand site traffic and usage patterns. No analytics cookies are set without your consent.</li>
+            </ul>
+            <p>Essential cookies are necessary for the site to function and cannot be disabled. You can manage optional cookies through the consent banner or your browser settings. Blocking cookies may affect your experience.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">5. Data Security</h3>
-            <p>We implement industry-standard security measures to protect your information. All transactions are encrypted via SSL/TLS.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">5. Data Retention</h3>
+            <p>Purchase records are retained for 7 years for tax and legal compliance. Marketing preferences are kept until you unsubscribe or request deletion. Cookie consent preferences are stored in your browser indefinitely until you clear your browser data.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">6. Third-Party Services</h3>
-            <p>Our store is hosted on Shopify, which has its own privacy policy. Links to external sites (YouTube, Instagram, TikTok) are governed by their respective privacy policies.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">6. Your Rights</h3>
+            <p><strong>All users</strong> have the right to: access your personal data, correct inaccuracies, request deletion, and object to processing. <strong>EU/EEA residents (GDPR)</strong> also have the right to: data portability, restrict processing, withdraw consent at any time, and lodge a complaint with your Data Protection Authority. <strong>California residents (CCPA/CPRA)</strong> also have the right to: know what data is collected and how it is used, request deletion, opt out of sale or sharing of personal information, correct inaccuracies, and limit use of sensitive personal information. We will respond to all verified requests within 30 days (GDPR) or 45 days (CCPA). We will not discriminate against you for exercising any of these rights.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">7. Contact</h3>
-            <p>For privacy inquiries, contact us at: <strong>privacy@nocturnfilms.com</strong></p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">7. Do Not Sell My Personal Information</h3>
+            <p><strong>Nocturn Films does not sell your personal information.</strong> We do not and will not sell personal data to third parties for monetary or other valuable consideration as defined by the CCPA/CPRA. If this practice ever changes, we will provide a clear opt-out mechanism and update this policy accordingly.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">8. Data Security</h3>
+            <p>We implement industry-standard security measures to protect your information. All transactions are encrypted via SSL/TLS on Shopify's platform. However, no method of transmission over the Internet is 100% secure.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">9. International Data Transfers</h3>
+            <p>Your data may be transferred to and processed in the United States, where Shopify and Nocturn Films operate. For EU/EEA residents, such transfers are conducted under Standard Contractual Clauses or other lawful transfer mechanisms as required by GDPR Articles 44-49.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">10. Data Breach Notification</h3>
+            <p>In the event of a data breach that poses a risk to your rights and freedoms, we will notify affected individuals within 72 hours of becoming aware of the breach, in accordance with GDPR Art. 33. We will also notify any applicable regulatory authorities.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">11. Children's Privacy</h3>
+            <p>This website and store are intended for individuals aged 18 and older. We do not knowingly collect personal information from children under 13 (or under 16 in the EU). If we learn that we have collected data from a child, we will delete it promptly. Parents may contact us to request deletion.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">12. Third-Party Services</h3>
+            <p>Our store is hosted on Shopify Inc., which processes payment and order data under its own privacy policy. Links to external sites (YouTube, Instagram, TikTok) are governed by their respective privacy policies. We are not responsible for the privacy practices of these third-party services.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">13. Marketing Communications</h3>
+            <p>If you opt in to marketing emails during checkout on Shopify, you may unsubscribe at any time via the link in those emails. We will honor unsubscribe requests within 10 business days per the CAN-SPAM Act.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">14. Changes to This Policy</h3>
+            <p>We may update this Privacy Policy periodically. Changes take effect upon posting. We encourage you to review this page regularly. Material changes will be communicated via a notice on this site.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">15. Contact</h3>
+            <p>For privacy inquiries, data access requests, or to exercise your rights, contact us at: <strong>privacy@nocturnfilms.com</strong></p>
           </div>
         `
       },
       terms: {
         title: 'Terms of Service - Nocturn Films',
         icon: '📋',
-        width: 550,
-        height: 480,
+        width: 580,
+        height: 520,
         toolbar: false,
         content: `
           <div style="padding:20px;color:#ccc;font-size:12px;line-height:1.8;">
@@ -2404,22 +2834,49 @@
             <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">1. Acceptance of Terms</h3>
             <p>By accessing and using this website, you accept and agree to be bound by these Terms of Service. If you do not agree, please do not use this site.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">2. Products & Purchases</h3>
-            <p>All purchases are processed through our Shopify store. Product images are for illustration purposes. Colors may vary slightly from screen to screen. Prices are subject to change without notice.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">2. Age Requirement</h3>
+            <p>This website and store are intended for users aged 18 and older. By using this site, you represent that you are at least 18 years old or have the consent of a parent or guardian.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">3. Returns & Exchanges</h3>
-            <p>We accept returns within 30 days of purchase for unworn, unwashed items in original condition. Contact us to initiate a return. Shipping costs for returns are the customer's responsibility unless the item is defective.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">3. Products & Purchases</h3>
+            <p>All purchases are processed through our Shopify store. Product images are for illustration purposes only. Colors may vary slightly from screen to screen. Sizing may vary; please refer to size charts on our Shopify store. Prices are listed in USD and are subject to change without notice. All products are provided "as is" for personal use only.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">4. Intellectual Property</h3>
-            <p>All content on this site, including logos, designs, text, and graphics, is the property of Nocturn Films and is protected by copyright and trademark laws. Unauthorized use is prohibited.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">4. Shipping</h3>
+            <p>Orders typically ship within 5-10 business days. Free shipping applies to US orders of $75 or more. Shipping costs for all other orders are calculated at checkout. Tracking information is provided via email once your order ships. Title and risk of loss transfer to you upon delivery to the carrier. For lost or damaged shipments, please file a claim with the shipping carrier and contact us for assistance.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">5. Limitation of Liability</h3>
-            <p>Nocturn Films shall not be liable for any indirect, incidental, or consequential damages arising from the use of this website or purchase of products. Our maximum liability is limited to the purchase price of the product in question.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">5. Returns & Exchanges</h3>
+            <p>We accept returns within 30 days of delivery for unworn, unwashed items in original condition with all tags attached and in original packaging. To initiate a return, email <strong>support@nocturnfilms.com</strong> with your order number. Shipping costs for returns are the customer's responsibility unless the item is defective or incorrect. Defects must be reported within 30 days of receipt with photographic evidence. Refunds are issued to the original payment method within 14 business days of receiving the return. Exchanges are available for the same item in a different size or color, subject to availability. Items marked "Final Sale" are non-returnable.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">6. Governing Law</h3>
-            <p>These terms are governed by the laws of the United States. Any disputes will be resolved in accordance with applicable law.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">6. Intellectual Property & DMCA</h3>
+            <p>All content on this site, including logos, designs, text, graphics, and film content (including Hospice, Echo, and The Candle Man), is the property of Nocturn Films and is protected by copyright and trademark laws. You are granted a limited, non-exclusive license to view this site for personal, non-commercial use only. You may not copy, reproduce, distribute, modify, or create derivative works from any content without prior written permission. If you believe any content on this site infringes your copyright, please submit a DMCA takedown notice to: <strong>legal@nocturnfilms.com</strong> with: (a) identification of the copyrighted work, (b) identification of the infringing material, (c) your contact information, and (d) a statement under penalty of perjury that your claim is accurate.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">7. Contact</h3>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">7. Disclaimer of Warranties</h3>
+            <p>THIS WEBSITE AND ALL PRODUCTS ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">8. Limitation of Liability</h3>
+            <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, NOCTURN FILMS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING DAMAGES FOR LOST PROFITS, LOST DATA, BUSINESS INTERRUPTION, OR PERSONAL INJURY, ARISING FROM THE USE OF THIS WEBSITE OR PURCHASE OF PRODUCTS. OUR TOTAL LIABILITY SHALL NOT EXCEED THE PURCHASE PRICE OF THE PRODUCT IN QUESTION.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">9. Indemnification</h3>
+            <p>You agree to indemnify and hold harmless Nocturn Films, its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from your violation of these Terms or your use of this website.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">10. Prohibited Conduct</h3>
+            <p>You agree not to: (a) use the site for any unlawful purpose; (b) scrape, crawl, or use automated tools to access the site; (c) attempt to reverse engineer or compromise the site's security; (d) infringe upon Nocturn Films' intellectual property; or (e) interfere with the site's operation or other users' access.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">11. Dispute Resolution & Governing Law</h3>
+            <p>These terms are governed by the laws of the State of Utah, United States, without regard to conflict of law principles. Any disputes shall be resolved through binding arbitration administered by the American Arbitration Association, except that either party may seek injunctive relief in a court of competent jurisdiction. You agree to waive any right to participate in a class action lawsuit or class-wide arbitration.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">12. Termination</h3>
+            <p>We reserve the right to suspend or terminate your access to this website at any time, without notice, for any reason, including violation of these Terms.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">13. Modifications</h3>
+            <p>We reserve the right to modify these Terms at any time. Changes take effect immediately upon posting. Your continued use of the site after changes constitutes acceptance of the updated Terms.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">14. Severability</h3>
+            <p>If any provision of these Terms is found to be unenforceable or invalid, the remaining provisions shall remain in full force and effect.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">15. Entire Agreement</h3>
+            <p>These Terms, together with our Privacy Policy and any other policies referenced herein, constitute the entire agreement between you and Nocturn Films regarding your use of this website, superseding all prior agreements.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">16. Contact</h3>
             <p>For questions about these terms, contact us at: <strong>legal@nocturnfilms.com</strong></p>
           </div>
         `
@@ -2427,8 +2884,8 @@
       accessibility: {
         title: 'Accessibility Statement - Nocturn Films',
         icon: '📄',
-        width: 550,
-        height: 480,
+        width: 580,
+        height: 520,
         toolbar: false,
         content: `
           <div style="padding:20px;color:#ccc;font-size:12px;line-height:1.8;">
@@ -2438,30 +2895,37 @@
             <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Our Commitment</h3>
             <p>Nocturn Films is committed to ensuring digital accessibility for people with disabilities. We continually improve the user experience for everyone and apply the relevant accessibility standards.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Standards</h3>
-            <p>This website aims to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA. These guidelines explain how to make web content more accessible for people with disabilities.</p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Conformance Standard</h3>
+            <p>This website targets conformance with the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA. These guidelines explain how to make web content more accessible for people with disabilities. We regularly review our site against these standards.</p>
             <br>
             <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Accessibility Features</h3>
             <ul style="padding-left:20px;margin:8px 0;">
-              <li>Full keyboard navigation support</li>
-              <li>Skip-to-content link for screen readers</li>
-              <li>ARIA labels and roles for interactive elements</li>
+              <li>Full keyboard navigation support (Tab, Enter, Arrow keys, Escape)</li>
+              <li>Skip-to-content link (press Tab on page load to activate)</li>
+              <li>ARIA labels and roles for all interactive elements</li>
               <li>Visible focus indicators for keyboard users</li>
-              <li>Respects prefers-reduced-motion settings</li>
-              <li>High contrast mode support</li>
+              <li>Respects <em>prefers-reduced-motion</em> system settings</li>
+              <li>Supports <em>prefers-contrast: high</em> mode</li>
               <li>Screen reader compatible content structure</li>
-              <li>External links are clearly identified</li>
+              <li>External links are clearly identified for screen readers</li>
               <li>Sound is off by default and user-controllable</li>
+              <li>Color contrast meets WCAG AA standards (4.5:1 minimum)</li>
             </ul>
             <br>
             <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Known Limitations</h3>
-            <p>The Windows XP desktop interface uses drag-and-drop interactions that may be difficult for some assistive technology users. All content is alternatively accessible via the Start menu and keyboard navigation.</p>
+            <p>The Windows XP desktop interface uses drag-and-drop interactions for moving and resizing windows that may be difficult for some assistive technology users. All content is alternatively accessible via the Start menu and keyboard navigation. Resize handles are not keyboard accessible.</p>
             <br>
-            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Feedback</h3>
-            <p>We welcome your feedback on the accessibility of this site. If you encounter barriers, please contact us at: <strong>accessibility@nocturnfilms.com</strong></p>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Compatibility</h3>
+            <p>This site is designed to be compatible with modern browsers (Chrome, Firefox, Safari, Edge) and assistive technologies including screen readers (NVDA, JAWS, VoiceOver). We recommend using the latest browser version for the best experience.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Third-Party Content</h3>
+            <p>This site links to external platforms (YouTube, Instagram, TikTok, Shopify). We are not responsible for the accessibility of these third-party websites. We encourage you to review their respective accessibility policies.</p>
+            <br>
+            <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Feedback & Response</h3>
+            <p>We welcome your feedback on the accessibility of this site. If you encounter barriers, please contact us at: <strong>accessibility@nocturnfilms.com</strong>. We will respond to accessibility feedback within 30 business days and work to resolve issues as quickly as possible.</p>
             <br>
             <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Enforcement</h3>
-            <p>If you are not satisfied with our response, you may contact your local enforcement body or the relevant disability rights organization.</p>
+            <p>If you are not satisfied with our response, you may contact your local enforcement body, the relevant disability rights organization, or the U.S. Department of Justice ADA Information Line at 1-800-514-0301.</p>
           </div>
         `
       }
@@ -2670,13 +3134,14 @@
         const windowId = titleBar.dataset.window;
         if (windows[windowId] && !windows[windowId].maximized) {
           const win = windows[windowId].element;
+          const desktopRect = document.getElementById('desktop').getBoundingClientRect();
           const rect = win.getBoundingClientRect();
           dragState = {
             id: windowId,
             startX: e.clientX,
             startY: e.clientY,
-            origLeft: rect.left,
-            origTop: rect.top
+            origLeft: rect.left - desktopRect.left,
+            origTop: rect.top - desktopRect.top
           };
           focusWindow(windowId);
           e.preventDefault();
@@ -2725,6 +3190,61 @@
     });
 
     document.addEventListener('mouseup', () => {
+      dragState = null;
+      resizeState = null;
+    });
+
+    // ===== TOUCH SUPPORT FOR MOBILE =====
+    const isMobile = () => window.innerWidth <= 600;
+
+    // Convert single tap to open on mobile (instead of double-click)
+    document.querySelectorAll('.desktop-icon').forEach(icon => {
+      icon.addEventListener('click', (e) => {
+        if (isMobile()) {
+          const handler = icon.getAttribute('ondblclick');
+          if (handler) {
+            const match = handler.match(/openWindow\('([^']+)'\)/);
+            if (match) openWindow(match[1]);
+          }
+        }
+      });
+    });
+
+    // Touch drag for windows (title bar)
+    document.addEventListener('touchstart', (e) => {
+      const titleBar = e.target.closest('.title-bar');
+      if (titleBar && !e.target.closest('.title-bar-buttons') && !isMobile()) {
+        const windowId = titleBar.dataset.window;
+        if (windows[windowId] && !windows[windowId].maximized) {
+          const win = windows[windowId].element;
+          const desktopRect = document.getElementById('desktop').getBoundingClientRect();
+          const rect = win.getBoundingClientRect();
+          const touch = e.touches[0];
+          dragState = {
+            id: windowId,
+            startX: touch.clientX,
+            startY: touch.clientY,
+            origLeft: rect.left - desktopRect.left,
+            origTop: rect.top - desktopRect.top
+          };
+          focusWindow(windowId);
+        }
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+      if (dragState) {
+        const touch = e.touches[0];
+        const dx = touch.clientX - dragState.startX;
+        const dy = touch.clientY - dragState.startY;
+        const win = windows[dragState.id].element;
+        win.style.left = (dragState.origLeft + dx) + 'px';
+        win.style.top = (dragState.origTop + dy) + 'px';
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    document.addEventListener('touchend', () => {
       dragState = null;
       resizeState = null;
     });
