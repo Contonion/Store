@@ -118,7 +118,7 @@
     #desktop {
       position: fixed;
       inset: 0;
-      bottom: 50px;
+      bottom: 40px;
       background: var(--xp-desktop-bg);
       overflow: hidden;
     }
@@ -693,122 +693,75 @@
     /* ===== TASKBAR ===== */
     #taskbar {
       position: fixed;
-      bottom: 6px;
+      bottom: 0;
       left: 0;
       right: 0;
-      height: 44px;
-      background: linear-gradient(to bottom,
-        #2a0000 0%,
-        #1a0000 4%,
-        #120000 8%,
-        #0d0000 40%,
-        #100000 90%,
-        #1a0000 95%,
-        #250000 100%
-      );
-      border-top: 2px solid #4a0a0a;
+      height: 36px;
+      background: #1a0a0a;
+      border-top: 2px solid #3a1515;
       display: flex;
       align-items: center;
       z-index: 9999;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.6);
+      padding: 2px 2px 2px 2px;
     }
 
-    /* Black padding strip beneath taskbar */
+    /* No padding strip needed - taskbar sits flush at bottom */
     #taskbar::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      right: 0;
-      height: 6px;
-      background: #000;
+      display: none;
     }
 
-    /* Start button */
+    /* Start button - Win98 style */
     #start-button {
-      height: 100%;
-      padding: 0 16px 0 6px;
-      margin: 0 0 0 8px;
-      background: linear-gradient(to bottom,
-        #ef4444 0%,
-        #dc2626 8%,
-        #b91c1c 15%,
-        #991b1b 50%,
-        #7f1d1d 85%,
-        #6b1a1a 92%,
-        #8b0000 100%
-      );
-      border: none;
-      border-right: 1px solid #3a0000;
-      border-radius: 10px;
-      color: white;
-      font-size: 13px;
+      height: 28px;
+      padding: 0 8px 0 4px;
+      margin: 0 0 7px 6px;
+      background: #1a0a0a;
+      border-top: 2px solid #4a1515;
+      border-left: 2px solid #4a1515;
+      border-bottom: 2px solid #0a0000;
+      border-right: 2px solid #0a0000;
+      border-radius: 0;
+      color: #ccc;
+      font-size: 11px;
       font-weight: bold;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
-      letter-spacing: 0.5px;
+      gap: 4px;
+      text-shadow: none;
+      letter-spacing: 0;
       font-family: inherit;
       position: relative;
       overflow: hidden;
     }
 
-    #start-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 50%;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.05) 60%, transparent);
-      pointer-events: none;
-    }
-
+    #start-button::before,
     #start-button::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: rgba(255,255,255,0.1);
-      pointer-events: none;
+      display: none;
     }
 
     #start-button:hover {
-      background: linear-gradient(to bottom,
-        #f87171 0%,
-        #ef4444 8%,
-        #dc2626 15%,
-        #b91c1c 50%,
-        #991b1b 85%,
-        #7f1d1d 92%,
-        #991b1b 100%
-      );
+      background: #220a0a;
     }
 
     #start-button:active, #start-button.active {
-      background: linear-gradient(to bottom,
-        #991b1b 0%,
-        #7f1d1d 15%,
-        #6b1a1a 50%,
-        #7f1d1d 85%,
-        #8b0000 100%
-      );
+      background: #0d0000;
+      border-top: 2px solid #0a0000;
+      border-left: 2px solid #0a0000;
+      border-bottom: 2px solid #4a1515;
+      border-right: 2px solid #4a1515;
     }
 
     #start-button .start-icon {
-      font-size: 22px;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+      font-size: 16px;
+      filter: none;
     }
 
     #start-button .start-text {
-      font-size: 14px;
+      font-size: 11px;
       font-weight: bold;
-      font-style: italic;
-      letter-spacing: 1px;
+      font-style: normal;
+      letter-spacing: 0;
     }
 
     /* Quick Launch bar */
@@ -816,55 +769,52 @@
       display: flex;
       align-items: center;
       gap: 1px;
-      padding: 0 4px 0 8px;
+      padding: 0 4px 0 4px;
       height: 100%;
       position: relative;
     }
 
-    /* XP-style dotted grip handle on left side of quick launch */
+    /* Win98 grip handle */
     #quick-launch::before {
       content: '';
-      width: 6px;
-      height: 28px;
+      width: 4px;
+      height: 24px;
       flex-shrink: 0;
-      margin-right: 6px;
-      background-image:
-        radial-gradient(circle at 2px 2px, #4a0a0a 1px, transparent 1px),
-        radial-gradient(circle at 5px 5px, #4a0a0a 1px, transparent 1px);
-      background-size: 6px 6px;
-      background-position: 0 0, 3px 3px;
-      opacity: 0.8;
+      margin-right: 4px;
+      border-left: 2px solid #3a1515;
+      border-right: 2px solid #0a0000;
     }
 
     .ql-button {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       background: transparent;
       border: 1px solid transparent;
-      border-radius: 3px;
+      border-radius: 0;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      transition: all 0.1s;
+      font-size: 16px;
+      transition: none;
       padding: 0;
       position: relative;
     }
 
     .ql-button:hover {
-      background: linear-gradient(to bottom,
-        rgba(220, 38, 38, 0.15),
-        rgba(139, 0, 0, 0.2)
-      );
-      border-color: rgba(220, 38, 38, 0.35);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+      background: #2a0a0a;
+      border-top: 1px solid #4a1515;
+      border-left: 1px solid #4a1515;
+      border-bottom: 1px solid #0a0000;
+      border-right: 1px solid #0a0000;
     }
 
     .ql-button:active {
-      background: rgba(220, 38, 38, 0.25);
-      border-color: rgba(220, 38, 38, 0.4);
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+      background: #120000;
+      border-top: 1px solid #0a0000;
+      border-left: 1px solid #0a0000;
+      border-bottom: 1px solid #4a1515;
+      border-right: 1px solid #4a1515;
     }
 
     .ql-button .ql-tooltip {
@@ -873,51 +823,35 @@
       bottom: 100%;
       left: 50%;
       transform: translateX(-50%);
-      background: #1a1a1a;
-      border: 1px solid #3a0000;
-      color: #ddd;
+      background: #1a1a0a;
+      border: 1px solid #333;
+      color: #ccc;
       font-size: 11px;
-      padding: 3px 8px;
+      padding: 2px 6px;
       white-space: nowrap;
-      border-radius: 2px;
-      margin-bottom: 8px;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+      border-radius: 0;
+      margin-bottom: 6px;
+      box-shadow: 1px 1px 0 #000;
       pointer-events: none;
     }
 
     .ql-button .ql-tooltip::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 4px solid transparent;
-      border-top-color: #3a0000;
+      display: none;
     }
 
     .ql-button:hover .ql-tooltip {
       display: block;
-      animation: tooltipIn 0.15s ease-out;
     }
 
-    @keyframes tooltipIn {
-      from { opacity: 0; transform: translateX(-50%) translateY(4px); }
-      to { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
-
-    /* XP-style dotted grip handle dividers */
+    /* Win98 raised grip dividers */
     .taskbar-grip {
-      width: 6px;
-      height: 28px;
-      background-image:
-        radial-gradient(circle at 2px 2px, #4a0a0a 1px, transparent 1px),
-        radial-gradient(circle at 5px 5px, #4a0a0a 1px, transparent 1px);
-      background-size: 6px 6px;
-      background-position: 0 0, 3px 3px;
+      width: 4px;
+      height: 24px;
+      border-left: 2px solid #3a1515;
+      border-right: 2px solid #0a0000;
       cursor: default;
       flex-shrink: 0;
-      margin: 0 4px;
-      opacity: 0.8;
+      margin: 0 3px;
     }
 
     /* Task buttons area */
@@ -936,68 +870,46 @@
     }
 
     .task-button {
-      height: 32px;
-      min-width: 150px;
-      max-width: 200px;
-      padding: 0 10px;
-      background: linear-gradient(to bottom,
-        #1e1e1e 0%,
-        #151515 8%,
-        #111 50%,
-        #0d0d0d 92%,
-        #151515 100%
-      );
-      border: 1px solid #333;
-      border-top-color: #444;
-      border-bottom-color: #1a1a1a;
-      border-radius: 3px;
+      height: 26px;
+      min-width: 140px;
+      max-width: 180px;
+      padding: 0 8px;
+      background: #1a0a0a;
+      border-top: 2px solid #4a1515;
+      border-left: 2px solid #4a1515;
+      border-bottom: 2px solid #0a0000;
+      border-right: 2px solid #0a0000;
+      border-radius: 0;
       color: #bbb;
       font-size: 11px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       font-family: inherit;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.04),
-        0 1px 0 rgba(0,0,0,0.3);
-      transition: all 0.1s;
+      box-shadow: none;
+      transition: none;
     }
 
     .task-button.active {
-      background: linear-gradient(to bottom,
-        #2a0505 0%,
-        #1f0303 8%,
-        #1a0000 50%,
-        #150000 92%,
-        #1f0303 100%
-      );
-      border-color: #5a0000;
-      border-top-color: #3a0000;
-      border-bottom-color: #4a0000;
+      background: #0d0000;
+      border-top: 2px solid #0a0000;
+      border-left: 2px solid #0a0000;
+      border-bottom: 2px solid #4a1515;
+      border-right: 2px solid #4a1515;
       color: #fff;
-      box-shadow:
-        inset 0 0 8px rgba(139, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255,255,255,0.03),
-        0 1px 0 rgba(0,0,0,0.3);
+      box-shadow: none;
     }
 
     .task-button:hover:not(.active) {
-      background: linear-gradient(to bottom,
-        #252525 0%,
-        #1e1e1e 8%,
-        #181818 50%,
-        #141414 92%,
-        #1e1e1e 100%
-      );
-      border-color: #444;
+      background: #220a0a;
     }
 
     .task-button .icon {
-      font-size: 16px;
+      font-size: 14px;
       flex-shrink: 0;
     }
 
@@ -1011,13 +923,17 @@
     #system-tray {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 0 4px 0 6px;
-      height: 100%;
-      border-left: 1px solid #2a0000;
+      gap: 4px;
+      padding: 0 4px;
+      height: 28px;
+      border-top: 2px solid #0a0000;
+      border-left: 2px solid #0a0000;
+      border-bottom: 2px solid #3a1515;
+      border-right: 2px solid #3a1515;
       font-size: 11px;
       color: #ccc;
       position: relative;
+      margin-left: 2px;
     }
 
     /* Chevron / expand button for tray */
@@ -1051,69 +967,66 @@
     }
 
     .tray-icon {
-      font-size: 15px;
+      font-size: 14px;
       cursor: pointer;
       opacity: 0.7;
-      transition: all 0.15s;
-      width: 20px;
-      height: 20px;
+      transition: none;
+      width: 18px;
+      height: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: none;
+      border: none;
+      color: #ccc;
+      padding: 0;
+      font-family: inherit;
     }
 
     .tray-icon:hover {
       opacity: 1;
-      color: var(--xp-red);
     }
 
     /* Separator before clock */
     .tray-separator {
-      width: 1px;
-      height: 24px;
-      background: linear-gradient(to bottom, transparent, #3a0000, #3a0000, transparent);
-      margin: 0 3px;
+      width: 0;
+      height: 20px;
+      border-left: 1px solid #0a0000;
+      border-right: 1px solid #3a1515;
+      margin: 0 2px;
     }
 
-    /* Clock area - sunken XP style */
+    /* Clock area - Win98 flat */
     #clock-area {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 10px;
-      height: 32px;
-      background: linear-gradient(to bottom,
-        #080000 0%,
-        #0a0000 50%,
-        #0d0000 100%
-      );
-      border: 1px solid #1a0000;
-      border-top-color: #0a0000;
-      border-left-color: #0a0000;
-      border-right-color: #2a0000;
-      border-bottom-color: #2a0000;
-      border-radius: 2px;
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
-      min-width: 70px;
+      padding: 0 6px;
+      height: 100%;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      min-width: auto;
     }
 
     #clock {
       font-size: 11px;
-      color: #ddd;
+      color: #ccc;
       text-align: center;
-      letter-spacing: 0.3px;
+      letter-spacing: 0;
     }
 
     /* ===== START MENU ===== */
     #start-menu {
       position: fixed;
-      bottom: 50px;
+      bottom: 40px;
       left: 0;
       width: 380px;
       background: #0d0d0d;
       border: 2px solid #3a0000;
       border-bottom: none;
-      border-radius: 8px 8px 0 0;
+      border-radius: 0;
       z-index: 10000;
       display: none;
       box-shadow: 3px -3px 15px rgba(0,0,0,0.8), 0 0 30px rgba(139,0,0,0.15);
