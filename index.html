@@ -1965,6 +1965,96 @@
       }
     }
 
+    /* ===== WALLPAPER THEMES ===== */
+    /* Default is the horror bliss (no class needed) */
+
+    /* Midnight - deep blue/purple night sky */
+    #desktop-wallpaper.wp-midnight {
+      background: linear-gradient(to bottom, #020010 0%, #0a0025 20%, #12003a 40%, #0a0025 60%, #050015 100%);
+    }
+    #desktop-wallpaper.wp-midnight .moon {
+      background: radial-gradient(circle at 40% 40%, #aab8ff 0%, #6677cc 30%, #334488 60%, #1a2244 100%);
+      box-shadow: 0 0 40px rgba(100,120,220,0.4), 0 0 80px rgba(100,120,220,0.2);
+    }
+    #desktop-wallpaper.wp-midnight .hill-far { background: #080018; }
+    #desktop-wallpaper.wp-midnight .hill-mid { background: #060012; }
+    #desktop-wallpaper.wp-midnight .hill-near { background: #04000c; }
+    #desktop-wallpaper.wp-midnight .ground { background: linear-gradient(to bottom, #03000a, #050015); }
+    #desktop-wallpaper.wp-midnight .fog { background: linear-gradient(to bottom, transparent, rgba(10,0,40,0.3) 40%, rgba(10,0,40,0.5) 60%, transparent); }
+
+    /* Ember - warm orange/amber sunset */
+    #desktop-wallpaper.wp-ember {
+      background: linear-gradient(to bottom, #1a0800 0%, #3a1500 15%, #5a2000 30%, #4a1800 42%, #2a0e00 55%, #0d0d0d 100%);
+    }
+    #desktop-wallpaper.wp-ember .moon {
+      background: radial-gradient(circle at 40% 40%, #ffaa44 0%, #dd7722 30%, #aa4400 60%, #662200 100%);
+      box-shadow: 0 0 40px rgba(220,120,30,0.4), 0 0 80px rgba(220,120,30,0.2);
+    }
+    #desktop-wallpaper.wp-ember .hill-far { background: #0d0500; }
+    #desktop-wallpaper.wp-ember .hill-mid { background: #0a0300; }
+    #desktop-wallpaper.wp-ember .hill-near { background: #080200; }
+    #desktop-wallpaper.wp-ember .ground { background: linear-gradient(to bottom, #060100, #0a0a0a); }
+    #desktop-wallpaper.wp-ember .fog { background: linear-gradient(to bottom, transparent, rgba(40,15,0,0.3) 40%, rgba(30,10,0,0.5) 60%, transparent); }
+
+    /* Void - pure dark minimal */
+    #desktop-wallpaper.wp-void {
+      background: linear-gradient(to bottom, #050505 0%, #0a0a0a 50%, #080808 100%);
+    }
+    #desktop-wallpaper.wp-void .moon { display: none; }
+    #desktop-wallpaper.wp-void .hills { display: none; }
+    #desktop-wallpaper.wp-void .fog { display: none; }
+    #desktop-wallpaper.wp-void .stars .star { opacity: 0; animation: twinkle var(--dur, 3s) var(--delay, 0s) infinite ease-in-out; }
+
+    /* Crimson (default) - no extra class needed, showing as option */
+
+    /* Forest - dark green horror */
+    #desktop-wallpaper.wp-forest {
+      background: linear-gradient(to bottom, #000a00 0%, #051a05 15%, #0a2d0a 30%, #083808 42%, #001a00 55%, #0d0d0d 100%);
+    }
+    #desktop-wallpaper.wp-forest .moon {
+      background: radial-gradient(circle at 40% 40%, #88ff88 0%, #44aa44 30%, #226622 60%, #0a330a 100%);
+      box-shadow: 0 0 40px rgba(50,180,50,0.3), 0 0 80px rgba(50,180,50,0.15);
+    }
+    #desktop-wallpaper.wp-forest .hill-far { background: #050d05; }
+    #desktop-wallpaper.wp-forest .hill-mid { background: #030a03; }
+    #desktop-wallpaper.wp-forest .hill-near { background: #020802; }
+    #desktop-wallpaper.wp-forest .ground { background: linear-gradient(to bottom, #010601, #0a0a0a); }
+    #desktop-wallpaper.wp-forest .fog { background: linear-gradient(to bottom, transparent, rgba(5,30,5,0.3) 40%, rgba(3,20,3,0.5) 60%, transparent); }
+    #desktop-wallpaper.wp-forest .tree { background: #020a02; }
+    #desktop-wallpaper.wp-forest .tree::before,
+    #desktop-wallpaper.wp-forest .tree::after { background: #020a02; }
+
+    /* Settings wallpaper picker swatch */
+    .wp-swatch {
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: 4px;
+      border: 2px solid #333;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .wp-swatch:hover {
+      border-color: #888;
+      transform: scale(1.03);
+    }
+    .wp-swatch.active {
+      border-color: #dc2626;
+      box-shadow: 0 0 8px rgba(220,38,38,0.4);
+    }
+    .wp-swatch-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.7);
+      color: #ccc;
+      font-size: 10px;
+      text-align: center;
+      padding: 2px 0;
+    }
+
     /* ===== ACCESSIBILITY ===== */
 
     /* Skip to content link */
@@ -2208,13 +2298,13 @@
       left: 0;
       right: 0;
       height: 28px;
-      background: linear-gradient(to right, #3a0000, #5a0a0a, #8b0000, #5a0a0a, #3a0000);
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 9998;
-      border-bottom: 1px solid #4a0a0a;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      border-bottom: none;
+      box-shadow: none;
       overflow: hidden;
     }
 
@@ -2239,7 +2329,7 @@
     }
 
     #promo-banner .promo-text .promo-highlight {
-      color: #fca5a5;
+      color: #fff;
     }
 
     #promo-banner .promo-close {
@@ -2316,9 +2406,7 @@
   <!-- ===== FREE SHIPPING BANNER ===== -->
   <div id="promo-banner" role="banner" aria-label="Promotional offer">
     <span class="promo-text">
-      <span class="promo-highlight" aria-hidden="true">★</span>
       Free Shipping on US Orders <span class="promo-highlight">$75+</span>
-      <span class="promo-highlight" aria-hidden="true">★</span>
     </span>
     <button class="promo-close" onclick="closePromoBanner()" aria-label="Dismiss promotional banner">&times;</button>
   </div>
@@ -2388,6 +2476,10 @@
       <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('about')" onkeydown="handleIconKey(event, 'about')" aria-label="About - press Enter to open">
         <span class="icon" aria-hidden="true">💀</span>
         <span class="label">About</span>
+      </div>
+      <div class="desktop-icon" role="listitem" tabindex="0" ondblclick="openWindow('settings')" onkeydown="handleIconKey(event, 'settings')" aria-label="Settings - press Enter to open">
+        <span class="icon" aria-hidden="true">⚙️</span>
+        <span class="label">Settings</span>
       </div>
       <div class="desktop-icon snake-icon" role="listitem" tabindex="0" ondblclick="openWindow('snake')" onkeydown="handleIconKey(event, 'snake')" aria-label="Snake Game - press Enter to open">
         <span class="icon" aria-hidden="true">🐍</span>
@@ -2506,6 +2598,10 @@
         <a class="menu-item menu-item-small" href="https://nocturnfilms.com" target="_blank" rel="noopener noreferrer" role="menuitem">
           <span class="item-icon" aria-hidden="true">🌐</span>
           <span>Main Site<span class="sr-only"> (opens in new tab)</span></span>
+        </a>
+        <a class="menu-item menu-item-small" href="#" role="menuitem" onclick="openWindow('settings'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">⚙️</span>
+          <span>Settings</span>
         </a>
         <a class="menu-item menu-item-small" href="#" role="menuitem" onclick="openWindow('about'); closeStartMenu(); return false;">
           <span class="item-icon" aria-hidden="true">💀</span>
@@ -2947,6 +3043,33 @@
             <br>
             <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Enforcement</h3>
             <p>If you are not satisfied with our response, you may contact your local enforcement body, the relevant disability rights organization, or the U.S. Department of Justice ADA Information Line at 1-800-514-0301.</p>
+          </div>
+        `
+      },
+      settings: {
+        title: 'Settings - Nocturn Films',
+        icon: '⚙️',
+        width: 480,
+        height: 440,
+        toolbar: false,
+        content: `
+          <div style="padding:20px;color:#ccc;font-size:12px;line-height:1.8;">
+            <h2 style="color:#ddd;font-size:16px;margin-bottom:16px;">Settings</h2>
+
+            <div style="margin-bottom:24px;">
+              <h3 style="color:#ddd;font-size:13px;margin-bottom:10px;">Cookie Preferences</h3>
+              <p style="color:#999;font-size:11px;margin-bottom:10px;">Essential cookies are always active for basic site functionality. You can choose whether to allow optional analytics cookies.</p>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <button id="settings-cookies-accept" onclick="settingsSetCookies('accepted')" style="padding:6px 16px;background:linear-gradient(to bottom,#dc2626,#8b0000);border:1px solid #5a0000;border-radius:3px;color:#fff;font-size:11px;font-weight:bold;cursor:pointer;font-family:inherit;">Accept All</button>
+                <button id="settings-cookies-essential" onclick="settingsSetCookies('declined')" style="padding:6px 16px;background:linear-gradient(to bottom,#333,#1a1a1a);border:1px solid #444;border-radius:3px;color:#ccc;font-size:11px;cursor:pointer;font-family:inherit;">Essential Only</button>
+                <span id="settings-cookie-status" style="color:#999;font-size:11px;margin-left:8px;"></span>
+              </div>
+            </div>
+
+            <div>
+              <h3 style="color:#ddd;font-size:13px;margin-bottom:10px;">Wallpaper</h3>
+              <div id="wallpaper-picker" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div>
+            </div>
           </div>
         `
       },
@@ -3780,34 +3903,43 @@
     });
 
     // ===== POSITION DESKTOP ICONS - FILL LEFT COLUMN FIRST =====
-    (function positionDesktopIcons() {
+    function layoutDesktopIcons() {
       if (isMobile()) return;
       const icons = document.querySelectorAll('.desktop-icon:not(.snake-icon)');
       const colWidth = 110;
       const rowHeight = 100;
       const padLeft = 20;
       const padTop = 16;
-      // Calculate how many rows fit in available desktop height
       const desktopEl = document.getElementById('desktop');
       const availHeight = desktopEl.offsetHeight || (window.innerHeight - 80);
       const maxRows = Math.max(3, Math.floor((availHeight - padTop) / rowHeight));
 
       icons.forEach((icon, i) => {
+        // Skip icons the user has manually dragged
+        if (icon.dataset.userPlaced) return;
         const col = Math.floor(i / maxRows);
         const row = i % maxRows;
         icon.style.left = (padLeft + col * colWidth) + 'px';
         icon.style.top = (padTop + row * rowHeight) + 'px';
       });
 
-      // Position Snake icon in bottom-right corner
+      // Position Snake icon in bottom-right corner (unless user-placed)
       const snakeIcon = document.querySelector('.snake-icon');
-      if (snakeIcon) {
+      if (snakeIcon && !snakeIcon.dataset.userPlaced) {
         const dw = desktopEl.offsetWidth || window.innerWidth;
         const dh = desktopEl.offsetHeight || (window.innerHeight - 80);
         snakeIcon.style.left = (dw - 120) + 'px';
         snakeIcon.style.top = (dh - 110) + 'px';
       }
-    })();
+    }
+    layoutDesktopIcons();
+
+    // Re-layout icons when window is resized
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(layoutDesktopIcons, 100);
+    });
 
     // ===== DRAGGABLE DESKTOP ICONS (desktop only) =====
     (function initIconDrag() {
@@ -3863,6 +3995,8 @@
         icon.classList.remove('icon-dragging');
 
         if (wasDragged) {
+          // Mark as user-placed so resize won't move it back
+          icon.dataset.userPlaced = '1';
           const block = (ev) => { ev.stopPropagation(); ev.preventDefault(); };
           icon.addEventListener('click', block, { capture: true, once: true });
           icon.addEventListener('dblclick', block, { capture: true, once: true });
@@ -4177,9 +4311,121 @@
         if (id === 'snake') {
           setTimeout(init, 50);
         }
+        if (id === 'settings') {
+          setTimeout(initSettingsUI, 50);
+        }
       };
 
       return { start, reset, init };
+    })();
+
+    // ===== SETTINGS (Cookies + Wallpaper) =====
+    const WALLPAPER_THEMES = [
+      { id: '',            name: 'Crimson',   bg: 'linear-gradient(to bottom, #1a0000, #0a0a0a)' },
+      { id: 'wp-midnight', name: 'Midnight',  bg: 'linear-gradient(to bottom, #0a0020, #000010)' },
+      { id: 'wp-ember',    name: 'Ember',     bg: 'linear-gradient(to bottom, #1a0800, #0a0500)' },
+      { id: 'wp-forest',   name: 'Forest',    bg: 'linear-gradient(to bottom, #001a00, #000a00)' },
+      { id: 'wp-void',     name: 'Void',      bg: 'linear-gradient(to bottom, #0a0a0a, #000000)' }
+    ];
+
+    function getCookieConsent() {
+      try { return localStorage.getItem('nocturn_cookies'); } catch(e) { return null; }
+    }
+
+    function settingsSetCookies(value) {
+      try { localStorage.setItem('nocturn_cookies', value); } catch(e) {}
+      // Hide the cookie banner if visible
+      var banner = document.getElementById('cookie-banner');
+      if (banner) banner.classList.remove('visible');
+      // If declining, clear saved wallpaper
+      if (value === 'declined') {
+        try { localStorage.removeItem('nocturn_wallpaper'); } catch(e) {}
+      }
+      updateCookieStatusUI();
+    }
+
+    function updateCookieStatusUI() {
+      var status = document.getElementById('settings-cookie-status');
+      if (!status) return;
+      var consent = getCookieConsent();
+      if (consent === 'accepted') {
+        status.textContent = 'Status: All cookies accepted';
+        status.style.color = '#4ade80';
+      } else if (consent === 'declined') {
+        status.textContent = 'Status: Essential only';
+        status.style.color = '#f97316';
+      } else {
+        status.textContent = 'Status: Not set';
+        status.style.color = '#999';
+      }
+    }
+
+    function setWallpaper(themeId) {
+      var wall = document.getElementById('desktop-wallpaper');
+      if (!wall) return;
+      // Remove all wallpaper classes
+      WALLPAPER_THEMES.forEach(function(t) {
+        if (t.id) wall.classList.remove(t.id);
+      });
+      // Apply new theme
+      if (themeId) wall.classList.add(themeId);
+      // Save if cookies accepted
+      if (getCookieConsent() === 'accepted') {
+        try { localStorage.setItem('nocturn_wallpaper', themeId); } catch(e) {}
+      }
+      // Update swatch active states
+      var swatches = document.querySelectorAll('.wp-swatch');
+      swatches.forEach(function(s) {
+        s.classList.toggle('active', (s.dataset.theme || '') === themeId);
+      });
+    }
+
+    function initSettingsUI() {
+      updateCookieStatusUI();
+      var picker = document.getElementById('wallpaper-picker');
+      if (!picker) return;
+      // Only populate once
+      if (picker.children.length > 0) {
+        // Just update active state
+        var current = '';
+        try { current = localStorage.getItem('nocturn_wallpaper') || ''; } catch(e) {}
+        picker.querySelectorAll('.wp-swatch').forEach(function(s) {
+          s.classList.toggle('active', (s.dataset.theme || '') === current);
+        });
+        updateCookieStatusUI();
+        return;
+      }
+      var currentTheme = '';
+      try { currentTheme = localStorage.getItem('nocturn_wallpaper') || ''; } catch(e) {}
+      WALLPAPER_THEMES.forEach(function(t) {
+        var swatch = document.createElement('div');
+        swatch.className = 'wp-swatch' + ((t.id === currentTheme) ? ' active' : '');
+        swatch.dataset.theme = t.id;
+        swatch.style.background = t.bg;
+        swatch.setAttribute('role', 'button');
+        swatch.setAttribute('aria-label', 'Wallpaper: ' + t.name);
+        swatch.tabIndex = 0;
+        swatch.onclick = function() { setWallpaper(t.id); };
+        swatch.onkeydown = function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setWallpaper(t.id); } };
+        var label = document.createElement('div');
+        label.className = 'wp-swatch-label';
+        label.textContent = t.name;
+        swatch.appendChild(label);
+        picker.appendChild(swatch);
+      });
+    }
+
+    // Load saved wallpaper on page init
+    (function loadSavedWallpaper() {
+      if (getCookieConsent() === 'accepted') {
+        try {
+          var saved = localStorage.getItem('nocturn_wallpaper');
+          if (saved) {
+            var wall = document.getElementById('desktop-wallpaper');
+            if (wall) wall.classList.add(saved);
+          }
+        } catch(e) {}
+      }
     })();
   </script>
 
