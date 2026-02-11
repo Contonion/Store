@@ -1965,6 +1965,14 @@
       }
     }
 
+    /* Also hide snake on touch devices in landscape (phones rotated) */
+    @media (pointer: coarse) and (max-height: 600px) {
+      .snake-icon, .snake-menu-item { display: none !important; }
+    }
+    @media (pointer: coarse) and (max-width: 1024px) {
+      .snake-icon, .snake-menu-item { display: none !important; }
+    }
+
     /* ===== WALLPAPER THEMES ===== */
     /* Default is the horror bliss (no class needed) */
 
@@ -2608,7 +2616,7 @@
           <span>About</span>
         </a>
         <div class="start-menu-separator" role="separator"></div>
-        <a class="menu-item menu-item-small desktop-hide-none" href="#" role="menuitem" onclick="openWindow('snake'); closeStartMenu(); return false;">
+        <a class="menu-item menu-item-small desktop-hide-none snake-menu-item" href="#" role="menuitem" onclick="openWindow('snake'); closeStartMenu(); return false;">
           <span class="item-icon" aria-hidden="true">🐍</span>
           <span>Snake</span>
         </a>
@@ -3115,6 +3123,29 @@
       `;
     }
 
+    // ===== WINDOW STATE PERSISTENCE =====
+    function saveWindowState() {
+      try {
+        if (localStorage.getItem('nocturn_cookies') !== 'accepted') return;
+        var state = [];
+        Object.keys(windows).forEach(function(id) {
+          var w = windows[id];
+          var el = w.element;
+          state.push({
+            id: id,
+            left: el.style.left,
+            top: el.style.top,
+            width: el.style.width,
+            height: el.style.height,
+            minimized: el.classList.contains('minimized'),
+            maximized: !!w.maximized,
+            zIndex: parseInt(el.style.zIndex) || 0
+          });
+        });
+        localStorage.setItem('nocturn_window_state', JSON.stringify(state));
+      } catch(e) {}
+    }
+
     // ===== WINDOW MANAGEMENT =====
     let windows = {};
     let windowOrder = [];
@@ -3212,6 +3243,7 @@
       if (content) content.focus();
 
       announceToSR(`${def.title} window opened`);
+      saveWindowState();
     }
 
     function closeWindow(id) {
@@ -3225,6 +3257,7 @@
       if (windowOrder.length > 0) {
         focusWindow(windowOrder[windowOrder.length - 1]);
       }
+      saveWindowState();
     }
 
     function minimizeWindow(id) {
@@ -3239,9 +3272,11 @@
         const wid = windowOrder[i];
         if (wid !== id && windows[wid] && !windows[wid].element.classList.contains('minimized')) {
           focusWindow(wid);
+          saveWindowState();
           return;
         }
       }
+      saveWindowState();
     }
 
     function maximizeWindow(id) {
@@ -3254,6 +3289,7 @@
         win.element.classList.add('maximized');
         win.maximized = true;
       }
+      saveWindowState();
     }
 
     function focusWindow(id) {
@@ -3364,8 +3400,14 @@
     });
 
     document.addEventListener('mouseup', () => {
-      dragState = null;
-      resizeState = null;
+      if (dragState || resizeState) {
+        dragState = null;
+        resizeState = null;
+        saveWindowState();
+      } else {
+        dragState = null;
+        resizeState = null;
+      }
     });
 
     // ===== TOUCH SUPPORT FOR MOBILE =====
@@ -3419,6 +3461,7 @@
     }, { passive: false });
 
     document.addEventListener('touchend', () => {
+      if (dragState || resizeState) saveWindowState();
       dragState = null;
       resizeState = null;
     });
@@ -4023,9 +4066,36 @@
       skipBoot = localStorage.getItem('nocturn_cookies') === 'accepted' && localStorage.getItem('nocturn_booted') === '1';
     } catch(e) {}
 
+    function restoreWindowState() {
+      try {
+        if (localStorage.getItem('nocturn_cookies') !== 'accepted') return false;
+        var saved = localStorage.getItem('nocturn_window_state');
+        if (!saved) return false;
+        var state = JSON.parse(saved);
+        if (!Array.isArray(state) || state.length === 0) return false;
+        // Sort by zIndex so focus order is preserved
+        state.sort(function(a, b) { return (a.zIndex || 0) - (b.zIndex || 0); });
+        state.forEach(function(s) {
+          if (!windowDefs[s.id]) return;
+          openWindow(s.id);
+          var w = windows[s.id];
+          if (!w) return;
+          var el = w.element;
+          if (s.left) el.style.left = s.left;
+          if (s.top) el.style.top = s.top;
+          if (s.width) el.style.width = s.width;
+          if (s.height) el.style.height = s.height;
+          if (s.maximized) { el.classList.add('maximized'); w.maximized = true; }
+          if (s.minimized) { el.classList.add('minimized'); el.setAttribute('aria-hidden', 'true'); }
+        });
+        updateTaskButtons();
+        return true;
+      } catch(e) { return false; }
+    }
+
     if (skipBoot) {
       document.getElementById('boot-screen').style.display = 'none';
-      openWindow('welcome');
+      if (!restoreWindowState()) openWindow('welcome');
     } else {
       let bootStep = 0;
       const bootInterval = setInterval(() => {
@@ -4103,7 +4173,7 @@
 
     function declineCookies() {
       document.getElementById('cookie-banner').classList.remove('visible');
-      try { localStorage.setItem('nocturn_cookies', 'declined'); } catch(e) {}
+      try { localStorage.setItem('nocturn_cookies', 'declined'); localStorage.removeItem('nocturn_window_state'); } catch(e) {}
     }
 
     // Show cookie banner if not previously answered
@@ -4358,7 +4428,7 @@
         try { localStorage.setItem('nocturn_booted', '1'); } catch(e) {}
       } else {
         // Clear saved preferences
-        try { localStorage.removeItem('nocturn_wallpaper'); localStorage.removeItem('nocturn_booted'); } catch(e) {}
+        try { localStorage.removeItem('nocturn_wallpaper'); localStorage.removeItem('nocturn_booted'); localStorage.removeItem('nocturn_window_state'); } catch(e) {}
       }
       updateCookieStatusUI();
     }
