@@ -4017,25 +4017,41 @@
       'Welcome to Nocturn Films.'
     ];
 
-    let bootStep = 0;
-    const bootInterval = setInterval(() => {
-      bootStep++;
-      const progress = (bootStep / bootTexts.length) * 100;
-      document.getElementById('boot-progress').style.width = progress + '%';
-      document.getElementById('boot-text').textContent = bootTexts[Math.min(bootStep, bootTexts.length - 1)];
+    // Skip boot sequence for returning visitors who accepted cookies
+    var skipBoot = false;
+    try {
+      skipBoot = localStorage.getItem('nocturn_cookies') === 'accepted' && localStorage.getItem('nocturn_booted') === '1';
+    } catch(e) {}
 
-      if (bootStep >= bootTexts.length) {
-        clearInterval(bootInterval);
-        setTimeout(() => {
-          document.getElementById('boot-screen').classList.add('fade-out');
+    if (skipBoot) {
+      document.getElementById('boot-screen').style.display = 'none';
+      openWindow('welcome');
+    } else {
+      let bootStep = 0;
+      const bootInterval = setInterval(() => {
+        bootStep++;
+        const progress = (bootStep / bootTexts.length) * 100;
+        document.getElementById('boot-progress').style.width = progress + '%';
+        document.getElementById('boot-text').textContent = bootTexts[Math.min(bootStep, bootTexts.length - 1)];
+
+        if (bootStep >= bootTexts.length) {
+          clearInterval(bootInterval);
           setTimeout(() => {
-            document.getElementById('boot-screen').style.display = 'none';
-            // Auto-open welcome window
-            openWindow('welcome');
-          }, 500);
-        }, 250);
-      }
-    }, 230);
+            document.getElementById('boot-screen').classList.add('fade-out');
+            setTimeout(() => {
+              document.getElementById('boot-screen').style.display = 'none';
+              openWindow('welcome');
+              // Mark boot as seen
+              try {
+                if (localStorage.getItem('nocturn_cookies') === 'accepted') {
+                  localStorage.setItem('nocturn_booted', '1');
+                }
+              } catch(e) {}
+            }, 500);
+          }, 250);
+        }
+      }, 230);
+    }
 
     // ===== KEYBOARD SUPPORT FOR DESKTOP ICONS =====
     function handleIconKey(event, windowId) {
@@ -4082,7 +4098,7 @@
     // ===== COOKIE CONSENT =====
     function acceptCookies() {
       document.getElementById('cookie-banner').classList.remove('visible');
-      try { localStorage.setItem('nocturn_cookies', 'accepted'); } catch(e) {}
+      try { localStorage.setItem('nocturn_cookies', 'accepted'); localStorage.setItem('nocturn_booted', '1'); } catch(e) {}
     }
 
     function declineCookies() {
@@ -4337,9 +4353,12 @@
       // Hide the cookie banner if visible
       var banner = document.getElementById('cookie-banner');
       if (banner) banner.classList.remove('visible');
-      // If declining, clear saved wallpaper
-      if (value === 'declined') {
-        try { localStorage.removeItem('nocturn_wallpaper'); } catch(e) {}
+      if (value === 'accepted') {
+        // Mark boot as seen so it skips next time
+        try { localStorage.setItem('nocturn_booted', '1'); } catch(e) {}
+      } else {
+        // Clear saved preferences
+        try { localStorage.removeItem('nocturn_wallpaper'); localStorage.removeItem('nocturn_booted'); } catch(e) {}
       }
       updateCookieStatusUI();
     }
