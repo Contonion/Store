@@ -413,47 +413,41 @@
 
     /* ===== DESKTOP ICONS ===== */
     .desktop-icons {
-      display: grid;
-      grid-template-columns: repeat(2, auto);
-      gap: 12px;
-      padding: 20px;
       position: absolute;
       inset: 0;
       z-index: 1;
-      justify-content: start;
-      align-content: start;
+      pointer-events: none;
     }
 
     .desktop-icon {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 90px;
+      width: 100px;
       padding: 10px 6px;
       border-radius: 4px;
       cursor: pointer;
       text-align: center;
-      transition: background 0.1s;
-      position: relative;
-    }
-
-    /* When being dragged, use absolute positioning */
-    .desktop-icon.dragging {
-      position: fixed;
-      z-index: 9000;
-      opacity: 0.85;
-      pointer-events: none;
-      background: rgba(220, 38, 38, 0.15);
-      border-radius: 4px;
+      transition: background 0.15s;
+      position: absolute;
+      pointer-events: auto;
     }
 
     .desktop-icon:hover {
-      background: rgba(220, 38, 38, 0.1);
+      background: rgba(220, 38, 38, 0.12);
     }
 
     .desktop-icon.selected {
       background: rgba(220, 38, 38, 0.2);
       outline: 1px dotted rgba(220, 38, 38, 0.5);
+    }
+
+    .desktop-icon.icon-dragging {
+      z-index: 9000;
+      opacity: 0.8;
+      background: rgba(220, 38, 38, 0.15);
+      cursor: grabbing;
+      transition: none;
     }
 
     .desktop-icon .icon {
@@ -468,6 +462,7 @@
       text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
       line-height: 1.3;
       word-wrap: break-word;
+      max-width: 90px;
     }
 
     /* ===== XP WINDOW ===== */
@@ -1559,15 +1554,6 @@
       .start-menu-right {
         width: 130px;
       }
-
-      .desktop-icons {
-        gap: 4px;
-        padding: 10px;
-      }
-
-      .desktop-icon {
-        width: 65px;
-      }
     }
 
     /* ===== MOBILE LAYOUT ===== */
@@ -1599,7 +1585,7 @@
         bottom: 52px !important;
       }
 
-      /* Desktop icons in a 3-column grid for bigger icons on mobile */
+      /* Desktop icons in a 3-column grid on mobile (not draggable) */
       .desktop-icons {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -1607,11 +1593,13 @@
         padding: 10px 8px;
         position: relative;
         inset: auto;
+        pointer-events: auto;
         max-height: none;
         align-content: start;
       }
 
       .desktop-icon {
+        position: static !important;
         width: auto;
         padding: 10px 4px;
       }
@@ -1623,6 +1611,7 @@
 
       .desktop-icon .label {
         font-size: 10px;
+        max-width: none;
       }
 
       /* Taskbar - slightly taller for easier touch */
@@ -1969,9 +1958,10 @@
         font-size: 11px !important;
       }
 
-      /* Tray expand chevron hidden on mobile */
-      .tray-expand {
-        display: none;
+      /* Hide snake icon and tray expand on mobile */
+      .tray-expand,
+      .snake-icon {
+        display: none !important;
       }
     }
 
@@ -2399,6 +2389,10 @@
         <span class="icon" aria-hidden="true">💀</span>
         <span class="label">About</span>
       </div>
+      <div class="desktop-icon snake-icon" role="listitem" tabindex="0" ondblclick="openWindow('snake')" onkeydown="handleIconKey(event, 'snake')" aria-label="Snake Game - press Enter to open">
+        <span class="icon" aria-hidden="true">🐍</span>
+        <span class="label">Snake</span>
+      </div>
     </div>
   </main>
 
@@ -2516,6 +2510,11 @@
         <a class="menu-item menu-item-small" href="#" role="menuitem" onclick="openWindow('about'); closeStartMenu(); return false;">
           <span class="item-icon" aria-hidden="true">💀</span>
           <span>About</span>
+        </a>
+        <div class="start-menu-separator" role="separator"></div>
+        <a class="menu-item menu-item-small desktop-hide-none" href="#" role="menuitem" onclick="openWindow('snake'); closeStartMenu(); return false;">
+          <span class="item-icon" aria-hidden="true">🐍</span>
+          <span>Snake</span>
         </a>
       </div>
     </div>
@@ -2948,6 +2947,28 @@
             <br>
             <h3 style="color:#ddd;font-size:13px;margin-bottom:6px;">Enforcement</h3>
             <p>If you are not satisfied with our response, you may contact your local enforcement body, the relevant disability rights organization, or the U.S. Department of Justice ADA Information Line at 1-800-514-0301.</p>
+          </div>
+        `
+      },
+      snake: {
+        title: 'Snake - Nocturn Edition',
+        icon: '🐍',
+        width: 440,
+        height: 520,
+        toolbar: false,
+        content: `
+          <div id="snake-game" style="display:flex;flex-direction:column;align-items:center;padding:12px;background:#000;height:100%;">
+            <div style="display:flex;justify-content:space-between;width:100%;max-width:400px;margin-bottom:8px;">
+              <span style="color:#dc2626;font-size:13px;font-weight:bold;">Score: <span id="snake-score">0</span></span>
+              <span style="color:#999;font-size:11px;" id="snake-status">Press SPACE or click Start</span>
+              <span style="color:#dc2626;font-size:13px;font-weight:bold;">Best: <span id="snake-best">0</span></span>
+            </div>
+            <canvas id="snake-canvas" width="400" height="400" style="border:2px solid #3a0000;background:#0a0a0a;image-rendering:pixelated;max-width:100%;"></canvas>
+            <div style="margin-top:10px;display:flex;gap:8px;">
+              <button onclick="snakeGame.start()" style="padding:6px 20px;background:linear-gradient(to bottom,#dc2626,#8b0000);border:1px solid #5a0000;border-radius:3px;color:#fff;font-size:12px;font-weight:bold;cursor:pointer;font-family:inherit;">Start</button>
+              <button onclick="snakeGame.reset()" style="padding:6px 20px;background:linear-gradient(to bottom,#333,#1a1a1a);border:1px solid #444;border-radius:3px;color:#ccc;font-size:12px;cursor:pointer;font-family:inherit;">Reset</button>
+            </div>
+            <p style="color:#666;font-size:10px;margin-top:8px;">Arrow keys to move &bull; Space to start/pause</p>
           </div>
         `
       }
@@ -3758,73 +3779,95 @@
       });
     });
 
+    // ===== POSITION DESKTOP ICONS - FILL LEFT COLUMN FIRST =====
+    (function positionDesktopIcons() {
+      if (isMobile()) return;
+      const icons = document.querySelectorAll('.desktop-icon:not(.snake-icon)');
+      const colWidth = 110;
+      const rowHeight = 100;
+      const padLeft = 20;
+      const padTop = 16;
+      // Calculate how many rows fit in available desktop height
+      const desktopEl = document.getElementById('desktop');
+      const availHeight = desktopEl.offsetHeight || (window.innerHeight - 80);
+      const maxRows = Math.max(3, Math.floor((availHeight - padTop) / rowHeight));
+
+      icons.forEach((icon, i) => {
+        const col = Math.floor(i / maxRows);
+        const row = i % maxRows;
+        icon.style.left = (padLeft + col * colWidth) + 'px';
+        icon.style.top = (padTop + row * rowHeight) + 'px';
+      });
+
+      // Position Snake icon in bottom-right corner
+      const snakeIcon = document.querySelector('.snake-icon');
+      if (snakeIcon) {
+        const dw = desktopEl.offsetWidth || window.innerWidth;
+        const dh = desktopEl.offsetHeight || (window.innerHeight - 80);
+        snakeIcon.style.left = (dw - 120) + 'px';
+        snakeIcon.style.top = (dh - 110) + 'px';
+      }
+    })();
+
     // ===== DRAGGABLE DESKTOP ICONS (desktop only) =====
     (function initIconDrag() {
-      let iconDrag = null; // { el, startX, startY, origX, origY, moved }
-      const DRAG_THRESHOLD = 5; // px before considered a drag vs click
+      let dragging = null;
+      const desktop = document.getElementById('desktop');
 
       document.querySelectorAll('.desktop-icon').forEach(icon => {
         icon.addEventListener('mousedown', (e) => {
           if (isMobile()) return;
-          // Don't start drag from inside buttons etc
-          const rect = icon.getBoundingClientRect();
-          iconDrag = {
+          e.preventDefault();
+          const desktopRect = desktop.getBoundingClientRect();
+          const iconLeft = parseInt(icon.style.left) || 0;
+          const iconTop = parseInt(icon.style.top) || 0;
+          // Calculate where inside the icon the mouse clicked
+          dragging = {
             el: icon,
+            // Offset of mouse click from the icon's top-left corner (in desktop-relative coords)
+            grabX: (e.clientX - desktopRect.left) - iconLeft,
+            grabY: (e.clientY - desktopRect.top) - iconTop,
             startX: e.clientX,
             startY: e.clientY,
-            origX: rect.left,
-            origY: rect.top,
-            origW: rect.width,
-            origH: rect.height,
-            moved: false
+            hasMoved: false
           };
         });
       });
 
       document.addEventListener('mousemove', (e) => {
-        if (!iconDrag) return;
-        const dx = e.clientX - iconDrag.startX;
-        const dy = e.clientY - iconDrag.startY;
+        if (!dragging) return;
+        const dx = Math.abs(e.clientX - dragging.startX);
+        const dy = Math.abs(e.clientY - dragging.startY);
+        if (!dragging.hasMoved && dx < 5 && dy < 5) return;
 
-        // Only start visual drag after threshold
-        if (!iconDrag.moved && Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return;
+        dragging.hasMoved = true;
+        dragging.el.classList.add('icon-dragging');
 
-        if (!iconDrag.moved) {
-          iconDrag.moved = true;
-          iconDrag.el.classList.add('dragging');
-          iconDrag.el.style.width = iconDrag.origW + 'px';
-          iconDrag.el.style.left = iconDrag.origX + 'px';
-          iconDrag.el.style.top = iconDrag.origY + 'px';
-        }
-
-        iconDrag.el.style.left = (iconDrag.origX + dx) + 'px';
-        iconDrag.el.style.top = (iconDrag.origY + dy) + 'px';
-        e.preventDefault();
+        const desktopRect = desktop.getBoundingClientRect();
+        // Mouse position relative to desktop, minus grab offset = icon top-left
+        let newLeft = (e.clientX - desktopRect.left) - dragging.grabX;
+        let newTop = (e.clientY - desktopRect.top) - dragging.grabY;
+        // Clamp within desktop
+        const maxX = desktopRect.width - dragging.el.offsetWidth;
+        const maxY = desktopRect.height - dragging.el.offsetHeight;
+        newLeft = Math.max(0, Math.min(maxX, newLeft));
+        newTop = Math.max(0, Math.min(maxY, newTop));
+        dragging.el.style.left = newLeft + 'px';
+        dragging.el.style.top = newTop + 'px';
       });
 
-      document.addEventListener('mouseup', (e) => {
-        if (!iconDrag) return;
-        const icon = iconDrag.el;
-        const wasDragged = iconDrag.moved;
+      document.addEventListener('mouseup', () => {
+        if (!dragging) return;
+        const wasDragged = dragging.hasMoved;
+        const icon = dragging.el;
+        icon.classList.remove('icon-dragging');
 
         if (wasDragged) {
-          // Keep the icon at its dropped position using absolute positioning within the desktop
-          icon.classList.remove('dragging');
-          const desktopRect = document.getElementById('desktop').getBoundingClientRect();
-          const dropX = parseFloat(icon.style.left) - desktopRect.left;
-          const dropY = parseFloat(icon.style.top) - desktopRect.top;
-          icon.style.position = 'absolute';
-          icon.style.left = dropX + 'px';
-          icon.style.top = dropY + 'px';
-          icon.style.width = iconDrag.origW + 'px';
-
-          // Suppress the dblclick/click that would follow
-          const suppress = (ev) => { ev.stopPropagation(); ev.preventDefault(); };
-          icon.addEventListener('click', suppress, { capture: true, once: true });
-          icon.addEventListener('dblclick', suppress, { capture: true, once: true });
+          const block = (ev) => { ev.stopPropagation(); ev.preventDefault(); };
+          icon.addEventListener('click', block, { capture: true, once: true });
+          icon.addEventListener('dblclick', block, { capture: true, once: true });
         }
-
-        iconDrag = null;
+        dragging = null;
       });
     })();
 
@@ -3949,6 +3992,195 @@
     if (bootBar) {
       bootObserver.observe(bootBar, { attributes: true, attributeFilter: ['style'] });
     }
+
+    // ===== SNAKE GAME =====
+    const snakeGame = (function() {
+      const GRID = 20;        // 20x20 grid
+      const CELL = 20;        // each cell = 20px (400 / 20)
+      const SPEED_INIT = 240; // ms per tick
+      const SPEED_MIN = 120;
+      let canvas, ctx;
+      let snake, food, dir, nextDir, score, best, running, paused, gameOver, loopId;
+
+      function init() {
+        canvas = document.getElementById('snake-canvas');
+        if (!canvas) return;
+        ctx = canvas.getContext('2d');
+        best = 0;
+        reset();
+      }
+
+      function reset() {
+        clearTimeout(loopId);
+        snake = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
+        dir = { x: 1, y: 0 };
+        nextDir = { x: 1, y: 0 };
+        score = 0;
+        running = false;
+        paused = false;
+        gameOver = false;
+        placeFood();
+        updateUI();
+        draw();
+      }
+
+      function placeFood() {
+        let pos;
+        do {
+          pos = { x: Math.floor(Math.random() * GRID), y: Math.floor(Math.random() * GRID) };
+        } while (snake.some(s => s.x === pos.x && s.y === pos.y));
+        food = pos;
+      }
+
+      function start() {
+        if (gameOver) reset();
+        if (running && !paused) { paused = true; updateUI(); return; }
+        if (paused) { paused = false; }
+        running = true;
+        updateUI();
+        tick();
+      }
+
+      function tick() {
+        if (!running || paused) return;
+        dir = { ...nextDir };
+        const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+        // Wall collision
+        if (head.x < 0 || head.x >= GRID || head.y < 0 || head.y >= GRID) { die(); return; }
+        // Self collision
+        if (snake.some(s => s.x === head.x && s.y === head.y)) { die(); return; }
+
+        snake.unshift(head);
+
+        if (head.x === food.x && head.y === food.y) {
+          score += 10;
+          if (score > best) best = score;
+          placeFood();
+        } else {
+          snake.pop();
+        }
+
+        draw();
+        updateUI();
+        const speed = Math.max(SPEED_MIN, SPEED_INIT - Math.floor(score / 50) * 10);
+        loopId = setTimeout(tick, speed);
+      }
+
+      function die() {
+        running = false;
+        gameOver = true;
+        // Flash the snake red
+        draw(true);
+        updateUI();
+      }
+
+      function draw(dead) {
+        if (!ctx) return;
+        // Background
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, 400, 400);
+
+        // Grid lines (subtle)
+        ctx.strokeStyle = '#111';
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i <= GRID; i++) {
+          ctx.beginPath();
+          ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, 400);
+          ctx.moveTo(0, i * CELL); ctx.lineTo(400, i * CELL);
+          ctx.stroke();
+        }
+
+        // Food - pulsing red
+        ctx.fillStyle = '#dc2626';
+        ctx.shadowColor = '#dc2626';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(food.x * CELL + CELL / 2, food.y * CELL + CELL / 2, CELL / 2 - 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Snake
+        snake.forEach((seg, i) => {
+          if (dead) {
+            ctx.fillStyle = i === 0 ? '#ff4444' : '#8b0000';
+          } else if (i === 0) {
+            ctx.fillStyle = '#ef4444';
+          } else {
+            const fade = 1 - (i / snake.length) * 0.5;
+            ctx.fillStyle = 'rgb(' + Math.round(139 * fade) + ',' + Math.round(10 * fade) + ',' + Math.round(10 * fade) + ')';
+          }
+          ctx.fillRect(seg.x * CELL + 1, seg.y * CELL + 1, CELL - 2, CELL - 2);
+
+          // Head eyes
+          if (i === 0 && !dead) {
+            ctx.fillStyle = '#fff';
+            const ex = dir.x === 0 ? 4 : (dir.x > 0 ? 6 : -2);
+            const ey = dir.y === 0 ? 4 : (dir.y > 0 ? 6 : -2);
+            ctx.fillRect(seg.x * CELL + 5 + ex, seg.y * CELL + 5 + ey, 3, 3);
+            ctx.fillRect(seg.x * CELL + 11 + ex, seg.y * CELL + 5 + ey, 3, 3);
+          }
+        });
+
+        // Game over overlay
+        if (gameOver) {
+          ctx.fillStyle = 'rgba(0,0,0,0.7)';
+          ctx.fillRect(0, 0, 400, 400);
+          ctx.fillStyle = '#dc2626';
+          ctx.font = 'bold 28px Tahoma, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('GAME OVER', 200, 180);
+          ctx.fillStyle = '#999';
+          ctx.font = '14px Tahoma, sans-serif';
+          ctx.fillText('Score: ' + score, 200, 215);
+          ctx.fillStyle = '#666';
+          ctx.font = '12px Tahoma, sans-serif';
+          ctx.fillText('Press SPACE or click Start to play again', 200, 250);
+        }
+      }
+
+      function updateUI() {
+        const scoreEl = document.getElementById('snake-score');
+        const bestEl = document.getElementById('snake-best');
+        const statusEl = document.getElementById('snake-status');
+        if (scoreEl) scoreEl.textContent = score;
+        if (bestEl) bestEl.textContent = best;
+        if (statusEl) {
+          if (gameOver) statusEl.textContent = 'Game Over!';
+          else if (paused) statusEl.textContent = 'Paused';
+          else if (running) statusEl.textContent = 'Playing...';
+          else statusEl.textContent = 'Press SPACE or click Start';
+        }
+      }
+
+      function handleKey(e) {
+        // Only handle keys when snake window is active/focused
+        const snakeWin = document.getElementById('window-snake');
+        if (!snakeWin || !snakeWin.classList.contains('active')) return;
+
+        const key = e.key;
+        if (key === ' ') { e.preventDefault(); start(); return; }
+        if (!running || paused || gameOver) return;
+
+        if (key === 'ArrowUp' && dir.y === 0) { nextDir = { x: 0, y: -1 }; e.preventDefault(); }
+        else if (key === 'ArrowDown' && dir.y === 0) { nextDir = { x: 0, y: 1 }; e.preventDefault(); }
+        else if (key === 'ArrowLeft' && dir.x === 0) { nextDir = { x: -1, y: 0 }; e.preventDefault(); }
+        else if (key === 'ArrowRight' && dir.x === 0) { nextDir = { x: 1, y: 0 }; e.preventDefault(); }
+      }
+
+      document.addEventListener('keydown', handleKey);
+
+      // Init the game when the snake window is opened
+      const origOpenWindow = openWindow;
+      openWindow = function(id) {
+        origOpenWindow(id);
+        if (id === 'snake') {
+          setTimeout(init, 50);
+        }
+      };
+
+      return { start, reset, init };
+    })();
   </script>
 
 
